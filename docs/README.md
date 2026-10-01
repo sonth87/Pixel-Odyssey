@@ -1,4 +1,4 @@
-# Tài liệu dự án — Pixel Runner (tên tạm)
+# Tài liệu dự án — Pixel Odyssey
 
 Thư mục này là **nguồn sự thật duy nhất** của dự án. Mọi quyết định, quy tắc, thông số đều phải nằm ở đây. Nếu một điều gì đó chỉ tồn tại trong đầu người làm hoặc trong lịch sử chat, coi như nó chưa tồn tại.
 

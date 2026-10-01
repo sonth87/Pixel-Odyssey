@@ -17,7 +17,7 @@ Communicate with the owner in Vietnamese. The Alabasta spec is the template.
 ## A. New island
 1. **Spec**: copy `07-island-alabasta.md` → `docs/01-game-design/islands/<id>.md` (or next numbered file). Fill: length, difficulty range, speed clamp, item limits, music, palette mood, segments (each: feel, layers L1–L6, NPCs, obstacles by category, chunk tags/difficulty, item chance, events, ambience), exit chunk, following sea passage, asset list. Add/update the island row in the journey table (`02-run-journey-and-stages.md`). Get owner approval on the spec.
 2. **Palettes**: `art-source/palettes/segments/<segment_id>.gpl` (≤ 24 colors).
-3. **Parallax art** per segment (use `sprite-pipeline`): sky bands, L1/L2 tileable panoramas (check seams in Aseprite tiled mode), L3/L4/L6 prop pieces, transition pieces between segments, ground tileset (flat ×3 variants, pit edges, steps 8/16/24, transition tile).
+3. **Parallax art** per segment (use `sprite-pipeline`): sky bands, L1/L2 tileable panoramas (check seams in Pixelorama tile mode), L3/L4/L6 prop pieces, transition pieces between segments, ground tileset (flat ×3 variants, pit edges, steps 8/16/24, transition tile).
 4. **Obstacles/enemies/NPCs**: use the `add-content` skill; build one `ObstacleSet` per segment (category → weighted obstacles).
 5. **Chunks**: see section C. Target 15–25 chunks per segment (reuse `content/common/chunks/` where possible).
 6. **Events**: `BackgroundEventData` scenes (visual only, ≤ 40% darkening, respect reduce-flashing) and `HazardPatternData` chunks (must pass the validator; placed between breathers).

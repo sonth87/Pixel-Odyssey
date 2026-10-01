@@ -165,13 +165,23 @@ Mẫu:
 - Vì sao: làm ngay từ đầu gần như không tốn thêm; đổi sau phải viết lại vật lý và validator. Đánh đổi: code khó đọc hơn một chút.
 - Hệ quả: bảng thông số ở [physics](../05-technical/05-physics-collision-generation.md) được tính lại theo giá trị nguyên ở M1 (sai khác < 1 px); chống gian lận bằng phát lại khả thi ở M7.
 
+## D-028 — Tên game: Pixel Odyssey (trả lời Q-01)
+- Ngày: 2026-10-02 · Trạng thái: `CHỐT`
+- Quyết định: tên chính thức là **Pixel Odyssey**, trùng tên repo `sonth87/Pixel-Odyssey`.
+- Vì sao: tên không gắn với One Piece → dùng được cho mọi content pack (D-006), kể cả khi đổi sang nhân vật tự xây dựng.
+
+## D-029 — Phần mềm vẽ: Pixelorama; định dạng sprite: mỗi animation một dải PNG
+- Ngày: 2026-10-02 · Trạng thái: `CHỐT` (Pixelorama), `ĐỀ XUẤT` (định dạng)
+- Bối cảnh: Aseprite tốt nhất nhưng trả phí; chủ dự án chọn công cụ miễn phí. Pixelorama không có lệnh xuất tự động kiểu Aseprite và plugin Godot cho `.aseprite` không dùng được.
+- Quyết định: vẽ bằng Pixelorama (nguồn `.pxo` trong `art-source/pixelorama/`). Mỗi animation xuất **một PNG dải ngang**, tên file = tên tag, vào `game/content/<pack>/<nhóm>/<id>/sprites/<dạng>/`. Godot dựng SpriteFrames từ thư mục; FPS/lặp lấy từ dữ liệu. `tools/check_sprites.py` kiểm tra mọi dải.
+- Vì sao: định dạng không phụ thuộc phần mềm vẽ — đổi sang Aseprite/LibreSprite sau này không phải sửa game; dễ xem và kiểm tra tự động. Đánh đổi: xuất từng tag bằng tay trong Pixelorama (vài giây mỗi tag).
+
 ---
 
 ## Câu hỏi `MỞ`
 
 | ID | Câu hỏi | Cần quyết trước |
 |---|---|---|
-| Q-01 | Tên chính thức của game? | M8 |
 | Q-02 | Nâng cấp mua bằng Berries (tăng thời gian item...) có làm bảng xếp hạng thiếu công bằng không? Phương án: bảng riêng không nâng cấp / chế độ thử thách hằng ngày bỏ qua nâng cấp / chấp nhận | M7 |
 | Q-03 | Bảng xếp hạng chung mọi nhân vật hay riêng từng nhân vật (vì nội tại khác nhau)? | M7 |
 | Q-04 | Có kiếm tiền không (quảng cáo, mua skin)? Mô hình nào? | M7 |

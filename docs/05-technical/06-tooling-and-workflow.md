@@ -7,13 +7,12 @@
 | Godot | 4.x stable (khoá phiên bản cụ thể ở M0, ghi decision log) | Engine; cần ≥ 4.3 để có `Parallax2D`, `TileMapLayer` |
 | Git + Git LFS | mới nhất | Quản lý phiên bản, file nhị phân |
 | Python 3 + `pillow`, `numpy` | ≥ 3.10 | Script trong `tools/` |
-| Aseprite | mới nhất | Vẽ, animation, xuất sprite sheet |
+| Pixelorama | mới nhất | Vẽ, animation, xuất dải PNG (D-029) |
 | Audacity | mới nhất | Xử lý âm thanh |
 | (Android) Android SDK + JDK theo hướng dẫn export của Godot | | Từ M3 để test máy thật |
 
 Plugin Godot (trong `game/addons/`, ghi phiên bản vào decision log khi thêm):
 - **gdUnit4** — test.
-- **Aseprite Wizard** — import .aseprite (tuỳ chọn, quyết định ở M2).
 
 ## 2. Thiết lập repo (M0)
 
@@ -25,7 +24,7 @@ git lfs install
 ```
 *.png       filter=lfs diff=lfs merge=lfs -text
 *.jpg       filter=lfs diff=lfs merge=lfs -text
-*.aseprite  filter=lfs diff=lfs merge=lfs -text
+*.pxo       filter=lfs diff=lfs merge=lfs -text
 *.ogg       filter=lfs diff=lfs merge=lfs -text
 *.wav       filter=lfs diff=lfs merge=lfs -text
 *.ttf       filter=lfs diff=lfs merge=lfs -text
@@ -68,7 +67,7 @@ Lưới UI 640×360 (D-017): UI nằm trong `CanvasLayer` riêng render qua `Sub
 |---|---|---|
 | `pixelize.py` | Ảnh AI → pixel art thật ([pipeline](../02-art/05-ai-image-pipeline.md)) | M0 |
 | `extract_palette.py` | Trích bảng màu `.gpl` từ ảnh tham khảo | M0 |
-| `export_aseprite.sh` | Xuất mọi .aseprite → sprite sheet + JSON vào đúng thư mục content | M2 |
+| `check_sprites.py` | Kiểm tra dải PNG animation (kích thước, alpha, màu, chân chạm đáy, tên tag) | M0 |
 | `check_layers.py` | Quét `game/shared` và `game/runner` tìm tham chiếu sai chiều (`res://runner` trong shared, `res://content/` trong runner...) | M1 |
 | `check_ip_names.py` | Quét `game/shared` và `game/runner` tìm tên IP (danh sách từ khoá trong script: luffy, zoro, gomu, marine...) | M1 |
 | `check_localization.py` | Key dùng trong code/dữ liệu ↔ key trong CSV, đủ ngôn ngữ | M4 |

@@ -26,7 +26,7 @@ Hệ số trôi là `ĐỀ XUẤT`; chỉnh bằng mắt ở M3.
 2. **Phối cảnh khí quyển bằng màu**: L1 tương phản thấp nhất, ngả màu trời; L4 tương phản cao hơn nhưng vẫn kém L5.
 3. **Tương phản gameplay**: nhân vật và chướng ngại vật ở L5 phải nổi bật hơn mọi lớp nền. Kiểm tra bằng cách chuyển ảnh chụp màn hình sang đen trắng: chướng ngại vật vẫn phải tách rõ.
 4. **Vùng cấm tiền cảnh (FR-WD-09)**: L6 chỉ được ở y ≥ 158 (dưới mặt đất 10 px). Vật tiền cảnh cao hơn (cây cọ, cột) **chỉ** được đặt trong chunk `breather` và không được nằm trong khoảng 1 giây phía trước bất kỳ chướng ngại vật nào.
-5. **Toàn cảnh lặp**: mép trái nối liền mép phải. Kiểm tra trong Aseprite bằng *View → Tiled Mode*.
+5. **Toàn cảnh lặp**: mép trái nối liền mép phải. Kiểm tra trong Pixelorama bằng chế độ lặp ô (*Tile Mode*).
 6. **NPC nền không giống chướng ngại vật**: NPC ở L3/L4 nhỏ hơn và nhạt hơn kẻ địch ở L5; không mặc đồng phục giống kẻ địch của đoạn đó. Vì: người chơi không được nhầm trang trí là nguy hiểm.
 7. **Không dùng alpha để làm mờ** — làm "mờ xa" bằng màu.
 

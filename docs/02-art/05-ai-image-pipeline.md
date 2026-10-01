@@ -16,10 +16,13 @@
 ```
 ① Gen ảnh (Gemini / ChatGPT)          → art-source/raw/...           (+ .prompt.md)
 ② pixelize.py (tự động)               → art-source/processed/...
-③ Aseprite (sửa tay + animation)      → art-source/aseprite/<id>.aseprite
-④ Xuất sprite sheet + JSON            → game/content/<pack>/.../sprites/
-⑤ Godot import (Nearest, không nén mất dữ liệu) → dùng trong game
+③ Pixelorama (sửa tay + animation)    → art-source/pixelorama/<nhóm>/<id>.pxo
+④ Xuất mỗi animation một dải PNG      → game/content/<pack>/<nhóm>/<id>/sprites/<dạng>/<tag>.png
+   + tools/check_sprites.py kiểm tra
+⑤ Godot tự dựng SpriteFrames từ các dải PNG → dùng trong game
 ```
+
+**Định dạng trao đổi sprite** (D-029): mỗi animation là **một ảnh PNG dải ngang**, tên file = tên tag, các frame cùng kích thước xếp liền nhau từ trái sang phải. Số frame = chiều rộng ÷ chiều rộng khung. Vì: không phụ thuộc phần mềm vẽ (Pixelorama, Aseprite, LibreSprite đều xuất được), dễ xem bằng mắt, dễ kiểm tra tự động.
 
 ## 3. Công cụ
 
@@ -27,15 +30,13 @@
 |---|---|---|---|
 | **Gemini** (model ảnh "Nano Banana") | Gen ảnh, đặc biệt là **chỉnh sửa** từ ảnh có sẵn → giữ nhân vật nhất quán | Một trong hai | Tốt nhất cho frame animation (O-EDIT) |
 | **ChatGPT** (GPT image) | Gen ảnh, dải nhiều frame | Một trong hai | |
-| **Python 3 + Pillow + NumPy** | Chạy `tools/pixelize.py` | Có | Cài: `pip install pillow numpy` |
-| **Aseprite** | Sửa pixel, làm animation, tag, xuất sprite sheet | **Rất nên có** | Trả phí một lần (~20 USD), hoặc tự build từ mã nguồn miễn phí. Chuẩn công nghiệp cho pixel art, có dòng lệnh để xuất tự động |
-| Pixelorama | Thay thế miễn phí cho Aseprite | Tuỳ chọn | Làm bằng Godot, đủ dùng nhưng kém tiện hơn |
-| LibreSprite | Thay thế miễn phí (nhánh cũ của Aseprite) | Tuỳ chọn | Không có một số tính năng mới |
+| **Python 3 + Pillow + NumPy** | Chạy `tools/pixelize.py`, `tools/check_sprites.py` | Có | Cài: `pip install pillow numpy` |
+| **Pixelorama** | Sửa pixel, làm animation (frame, tag, onion skin, tiled mode), xuất dải PNG | **Có** (D-029) | Miễn phí, mã nguồn mở, chạy trên Mac/Windows/Linux. File nguồn `.pxo`. Nhập được bảng màu `.gpl` |
+| Aseprite / LibreSprite | Thay thế nếu sau này cần | Không | Định dạng dải PNG giữ nguyên nên đổi phần mềm không ảnh hưởng game |
 | **Godot 4** | Engine | Có | |
-| Plugin Godot "Aseprite Wizard" | Import file .aseprite thẳng thành SpriteFrames/AnimationPlayer | Tuỳ chọn (đề xuất) | Tự động hoá bước ④–⑤; cần đường dẫn tới Aseprite CLI |
 | Lospec (trang bảng màu pixel art) | Tham khảo bảng màu | Tuỳ chọn | Bảng màu của dự án đã có từ ảnh tham khảo |
 
-Có cần cả Aseprite **và** Godot không? **Có** — vai trò khác nhau: Aseprite là nơi *vẽ và làm animation*; Godot là nơi *chạy game*. Godot không có công cụ vẽ pixel tốt.
+Có cần cả Pixelorama **và** Godot không? **Có** — vai trò khác nhau: Pixelorama là nơi *vẽ và làm animation*; Godot là nơi *chạy game*. Godot không có công cụ vẽ pixel tốt.
 
 ## 4. Bước ① — Gen ảnh
 
@@ -52,7 +53,7 @@ Có cần cả Aseprite **và** Godot không? **Có** — vai trò khác nhau: A
 **Chiến lược để các frame nhất quán** (vấn đề khó nhất khi dùng AI):
 - Gen một frame `idle` thật chuẩn trước, xử lý xong, duyệt.
 - Mọi tư thế khác làm bằng **O-EDIT** từ frame đã duyệt (phóng to 16× nearest trước khi gửi).
-- Với chu kỳ chạy: dùng AI cho 2–3 **tư thế chính** (key pose), các frame xen giữa vẽ tay trong Aseprite bằng onion skin. Nhân vật cao 24 px nên vẽ tay một frame chỉ mất vài phút.
+- Với chu kỳ chạy: dùng AI cho 2–3 **tư thế chính** (key pose), các frame xen giữa vẽ tay trong Pixelorama bằng onion skin. Nhân vật cao 24 px nên vẽ tay một frame chỉ mất vài phút.
 - Chấp nhận thực tế: AI làm ~60–70% công việc, phần còn lại là sửa tay.
 
 ## 5. Bước ② — `tools/pixelize.py`
@@ -94,51 +95,53 @@ python tools/extract_palette.py [--input assets/charactors] [--out art-source/pa
 Lấy màu từ các ảnh **một nhân vật** (bỏ qua ảnh nhóm vì lưới không nguyên tạo màu pha ở viền), gộp màu gần nhau (ΔE < `--merge`), bỏ màu quá hiếm. Tạo `master.gpl` (hợp của mọi nhân vật) và `characters/<id>.gpl` (mỗi màu được ép về màu gần nhất trong master). Bảng con hiện có 14–28 màu vì gộp cả ảnh biến thể (`nami_money`, `luffy_piston`…); rút gọn tay trong Aseprite khi làm từng nhân vật.
 
 ### 5.4 Khi nào script không đủ
-- Lưới trong ảnh AI méo không đều → dò lưới sai → kết quả vỡ. Cách xử lý: thử `--grid` bằng tay; hoặc mở ảnh gốc trong Aseprite, *Sprite → Sprite Size* thu nhỏ nearest, rồi sửa tay.
+- Lưới trong ảnh AI méo không đều → dò lưới sai → kết quả vỡ. Cách xử lý: thử `--grid` bằng tay; hoặc mở ảnh gốc trong Pixelorama, thu nhỏ ảnh (chế độ nội suy *Nearest*) về đúng kích thước gốc, rồi sửa tay.
 - Nhân vật quá chi tiết so với 24 px → phải đơn giản hoá bằng tay.
 
-## 6. Bước ③ — Aseprite
+## 6. Bước ③ — Pixelorama
 
 ### 6.1 Cấu trúc file
-- **Một file .aseprite cho mỗi nhân vật / mỗi dạng biến hình / mỗi kẻ địch**: `art-source/aseprite/characters/luffy.aseprite`, `luffy_gear4.aseprite`.
-- Canvas = kích thước khung (64×64).
-- Mỗi animation là một **tag** đặt tên đúng [bảng trạng thái](02-character-animation-spec.md) (`idle`, `run`, `jump_rise`...). Tag có hướng *Forward*; animation lặp hay không do dữ liệu trong game quyết định.
+- **Một file `.pxo` cho mỗi nhân vật-dạng / mỗi kẻ địch**: `art-source/pixelorama/characters/luffy.pxo` (dạng thường), `luffy_gear4.pxo` (dạng biến hình, canvas 96×96).
+- Canvas = kích thước khung (64×64 / 96×96...).
+- Mỗi animation là một **tag** đặt tên đúng [bảng trạng thái](02-character-animation-spec.md) (`idle`, `run`, `jump_rise`...). Tag trong `.pxo` chỉ để làm việc cho tiện; game dùng tên file khi xuất (mục 7).
 - Layer: `body` (chính); thêm layer `fx` nếu có hiệu ứng vẽ liền sprite. Không để layer ẩn chứa rác.
-- Bật *Palette* = bảng con của nhân vật (`art-source/palettes/characters/<id>.gpl`).
-- Thời lượng frame đặt theo FPS trong đặc tả (12 FPS ≈ 83 ms).
+- Nhập bảng màu con của nhân vật (`art-source/palettes/characters/<id>.gpl`) và chỉ vẽ bằng bảng đó.
+- FPS xem trước đặt theo đặc tả (chạy 12, đứng 6) — trong game FPS lấy từ dữ liệu, không từ file `.pxo`.
 
-### 6.2 Việc cần làm trong Aseprite
-1. *File → Import* các frame đã pixelize (hoặc kéo thả), xếp đúng thứ tự, đúng tag.
+### 6.2 Việc cần làm trong Pixelorama
+1. Mở/nhập các frame đã pixelize (mỗi ảnh một frame), xếp đúng thứ tự, gắn tag.
 2. Bật **onion skin** để kiểm tra chuyển động; sửa chân về đúng hàng đáy.
 3. Sửa pixel lỗi, làm silhouette rõ hơn, đồng nhất màu giữa các frame.
 4. Vẽ frame xen giữa còn thiếu.
-5. Chạy thử từng tag (phím Enter) ở 1× và 4×.
+5. Chạy thử từng tag ở 1× và 4×.
 6. Chạy checklist ở [animation spec](02-character-animation-spec.md#5-checklist-duyệt-một-bộ-animation).
 
 ### 6.3 Nền tileable
-- *View → Tiled Mode → Tile in X axis* để thấy mép trái/phải nối nhau; sửa đường nối trực tiếp.
+- Bật chế độ lặp ô (*Tile Mode*) theo trục ngang để thấy mép trái/phải nối nhau; sửa đường nối trực tiếp.
 
-## 7. Bước ④ — Xuất
+## 7. Bước ④ — Xuất dải PNG
 
-Xuất tự động bằng dòng lệnh (script `tools/export_aseprite.sh`, viết ở M0/M2):
+Với mỗi tag: xuất dạng **spritesheet**, chỉ các frame của tag đó, **1 hàng**, không cắt viền (giữ nguyên khung để pivot đúng). Lưu vào:
 ```
-aseprite -b art-source/aseprite/characters/luffy.aseprite \
-  --sheet game/content/onepiece/characters/luffy/sprites/luffy.png \
-  --data  game/content/onepiece/characters/luffy/sprites/luffy.json \
-  --format json-array --list-tags --sheet-type packed --trim-sprite=false
+game/content/<pack>/<nhóm>/<id>/sprites/<dạng>/<tag>.png
+ví dụ  game/content/onepiece/characters/luffy/sprites/base/idle.png      (4 frame → 256×64)
+       game/content/onepiece/characters/luffy/sprites/gear4/form_run.png (khung 96×96)
 ```
-- **Không trim** frame nhân vật (giữ nguyên khung 64×64 để pivot đúng).
+(Tên mục menu trong Pixelorama có thể khác nhẹ theo phiên bản: *File → Export → Spritesheet*, chọn khoảng frame theo tag, số hàng = 1.)
+
 - Đồ vật tĩnh/nền: xuất PNG đơn.
-- Nếu dùng plugin Aseprite Wizard: plugin đọc thẳng .aseprite, bước này tự động.
+- Sau khi xuất, chạy kiểm tra:
+  ```
+  python tools/check_sprites.py game/content/onepiece/characters/luffy/sprites/base --frame 64x64 \
+         --palette art-source/palettes/characters/luffy.gpl
+  ```
+  Kiểm tra: chiều rộng chia hết cho khung, alpha chỉ 0/255, số màu và màu ngoài bảng, frame rỗng, chân chạm hàng đáy ở các animation trên mặt đất, tên file đúng dạng tag.
 
 ## 8. Bước ⑤ — Godot
 
-Cấu hình project (làm một lần ở M0):
-- *Rendering → Textures → Canvas Textures → Default Texture Filter* = **Nearest**.
-- *Display → Window → Stretch*: Mode = `viewport`, Aspect = `expand` (chiều rộng mở rộng), Scale Mode = `integer`. Kích thước viewport 320×180.
-- Import ảnh: *Compress Mode* = Lossless; *Mipmaps* = tắt.
+Cấu hình project (làm một lần ở M0): xem [tooling §3](../05-technical/06-tooling-and-workflow.md#3-cấu-hình-project-godot-m0) — lọc ảnh *Nearest*, phóng nguyên lần, import *Lossless*, không mipmaps.
 
-Nhân vật: `AnimatedSprite2D` với `SpriteFrames` sinh từ sheet + JSON (bằng plugin hoặc script import của dự án); tên animation = tên tag. Pivot: `offset` sao cho điểm (32, 64) của khung trùng gốc node.
+Nhân vật: `AnimatedSprite2D` với `SpriteFrames` **dựng tự động** từ thư mục `sprites/<dạng>/` (script import của dự án): mỗi file PNG → một animation cùng tên, cắt theo kích thước khung của `AnimationSet`. FPS và lặp/không lặp lấy từ bảng mặc định của [animation spec](02-character-animation-spec.md) (có thể ghi đè trong dữ liệu nhân vật). Pivot: `offset` sao cho điểm giữa đáy khung trùng gốc node.
 
 ## 9. Âm thanh cho asset
 

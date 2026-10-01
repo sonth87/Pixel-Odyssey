@@ -62,7 +62,7 @@ Kiểm tra tự động (M4): mọi key có đủ cột cho mọi ngôn ngữ; m
    ẮẰẲẴẶ ẤẦẨẪẬ ẾỀỂỄỆ ỐỒỔỖỘ ỚỜỞỠỢ ỨỪỬỮỰ Đ đ
    Thời gian mọi năng lực tăng. Kỷ lục mới! Chơi lại
    ```
-2. Không tìm được → **tự vẽ font bitmap** trong Aseprite (chỉ cần ~200 ký tự: Latin + tiếng Việt + số + dấu câu), xuất định dạng BMFont (.fnt) mà Godot đọc được. Đây là phương án chắc chắn nhất và đồng bộ phong cách nhất.
+2. Không tìm được → **tự vẽ font bitmap** trong Pixelorama (chỉ cần ~200 ký tự: Latin + tiếng Việt + số + dấu câu), xuất định dạng BMFont (.fnt) mà Godot đọc được. Đây là phương án chắc chắn nhất và đồng bộ phong cách nhất.
 3. Phương án dự phòng chắc chắn có đủ ký tự: GNU Unifont (lưới 16 px) — chỉ dùng tạm vì to và không đúng phong cách.
 
 Ghi lựa chọn font + giấy phép vào decision log.

@@ -3,7 +3,7 @@
 ## 1. Nguyên tắc
 
 1. **Mọi nhân vật dùng cùng bộ tên trạng thái** (FR-CH-02). Code gọi `play("jump_rise")`, không bao giờ `play("luffy_jump")`.
-2. Tên trạng thái = tên **tag** trong file Aseprite = tên animation trong Godot. Viết thường, gạch dưới.
+2. Tên trạng thái = tên **tag** trong file Pixelorama = tên file dải PNG xuất ra = tên animation trong Godot. Viết thường, gạch dưới.
 3. Mỗi trạng thái ghi rõ: dùng trong game 1, game 2 hay cả hai; mức ưu tiên; số frame; FPS; lặp hay không; khung.
 4. Chiêu thức chia **startup / active / recovery** (D-010).
 5. Số frame là **đề xuất tối thiểu**; ít frame mà tư thế rõ tốt hơn nhiều frame mà nhoè.
@@ -322,6 +322,6 @@ opposite to the legs. Keep the plain pure magenta (#FF00FF) background.
 - [ ] Không pixel bán trong suốt; không viền đen; màu thuộc bảng con của nhân vật.
 - [ ] Silhouette đọc được ở 1×.
 - [ ] Tên tag đúng bảng trên, đủ trạng thái B1.
-- [ ] Chạy thử loop trong Aseprite: không giật, không rung (lệch pivot).
+- [ ] `tools/check_sprites.py` pass; chạy thử loop trong Pixelorama: không giật, không rung (lệch pivot).
 - [ ] Chiều cao nhân vật nhất quán giữa các frame (trừ squash/stretch có chủ đích).
 - [ ] Prompt đã lưu kèm ảnh raw.

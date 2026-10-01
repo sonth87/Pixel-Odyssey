@@ -51,7 +51,7 @@ Dùng đúng thuật ngữ này trong tài liệu, code, và khi trao đổi v�
 | Active | `active` | Pha chiêu có hiệu lực (vùng đánh đang bật). |
 | Recovery | `recovery` | Pha thu chiêu, trở về tư thế bình thường. |
 | Sprite sheet | — | Một ảnh chứa nhiều frame xếp lưới. |
-| Onion skin | — | Tính năng của Aseprite hiện mờ frame trước/sau để vẽ animation mượt. |
+| Onion skin | — | Tính năng của phần mềm vẽ (Pixelorama) hiện mờ frame trước/sau để vẽ animation mượt. |
 
 ## Đồ hoạ
 

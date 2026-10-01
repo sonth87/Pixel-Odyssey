@@ -31,13 +31,13 @@ Thời gian ước lượng giả định 1 người làm bán thời gian; dùn
 **Mục tiêu**: mọi thứ cần để bắt đầu làm việc đúng cách đã sẵn sàng; quy trình art đã được chứng minh với 1 ảnh thật.
 
 **Phạm vi**
-- Khởi tạo git + Git LFS (cho ảnh, âm thanh, file .aseprite). `.gitignore` cho Godot.
+- Khởi tạo git + Git LFS (cho ảnh, âm thanh, file .pxo). `.gitignore` cho Godot.
 - Bộ tài liệu này (đã có) + `CLAUDE.md` + skill quy trình trong `.claude/skills/`.
 - Project Godot trong thư mục `game/` với cấu trúc thư mục theo [project structure](../05-technical/02-project-structure.md), cấu hình hiển thị pixel-perfect (độ phân giải logic, phóng to số nguyên, lọc Nearest).
 - Khoá phiên bản Godot, ghi vào decision log.
-- Script `tools/pixelize.py`: ảnh AI → pixel art thật (tìm lưới, thu nhỏ, xoá nền, ép bảng màu, đặt vào khung chuẩn). Đặc tả ở [AI image pipeline](../02-art/05-ai-image-pipeline.md).
+- Script `tools/pixelize.py`: ảnh AI → pixel art thật; `tools/check_sprites.py` kiểm tra dải PNG (tìm lưới, thu nhỏ, xoá nền, ép bảng màu, đặt vào khung chuẩn). Đặc tả ở [AI image pipeline](../02-art/05-ai-image-pipeline.md).
 - File bảng màu chuẩn (`art-source/palettes/master.gpl`) trích từ ảnh nhân vật hiện có.
-- Chạy thử toàn bộ quy trình art với **1 ảnh**: `luffy idle` → gen → pixelize → Aseprite → Godot → hiện trên màn hình.
+- Chạy thử toàn bộ quy trình art với **1 ảnh**: `luffy idle` → gen → pixelize → Pixelorama → Godot → hiện trên màn hình.
 - Ảnh tham khảo đặt ở `assets/` (`assets/charactors/`, `assets/1–3.jpg`).
 
 **Tiêu chí hoàn thành**
@@ -48,7 +48,7 @@ Thời gian ước lượng giả định 1 người làm bán thời gian; dùn
 
 **Ngoài phạm vi**: gameplay, UI, âm thanh.
 
-**Rủi ro**: AI gen không ra đúng lưới pixel → script phải xử lý được ảnh "pixel giả"; nếu không, chấp nhận vẽ lại tay trong Aseprite (nhân vật chỉ ~14×24 px nên vẽ tay vẫn nhanh).
+**Rủi ro**: AI gen không ra đúng lưới pixel → script phải xử lý được ảnh "pixel giả"; nếu không, chấp nhận vẽ lại tay trong Pixelorama (nhân vật chỉ ~14×24 px nên vẽ tay vẫn nhanh).
 
 ---
 

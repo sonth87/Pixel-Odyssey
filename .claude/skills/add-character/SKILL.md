@@ -26,7 +26,7 @@ Goal: the character works in the runner **without changing code** in `game/share
 Order — each step uses the previous approved frame as reference (O-EDIT):
 1. `idle` frame 1 → approve with owner before continuing (identity lock).
 2. Remaining B1 tags: `idle`, `run`, `jump_start`, `jump_rise`, `jump_apex`, `fall`, `land`, `hurt`, `death_hit`, `death_lie`, plus `double_jump` if the passive needs it, `eat` if the transform item is eaten.
-3. Transform form (`<id>_<form>.aseprite`): `transform_enter`, `transform_exit`, `form_idle`, `form_run`, `form_jump_rise`, `form_fall`, `form_land`, `form_attack`.
+3. Transform form (`<id>_<form>.pxo`, strips in `sprites/<form>/`): `transform_enter`, `transform_exit`, `form_idle`, `form_run`, `form_jump_rise`, `form_fall`, `form_land`, `form_attack`.
 4. Skill tags for skills with a runner role: `skill_N_startup/active/recovery`.
 5. B2 tags (`sit`, `sit_idle`, `cheer`, `taunt`, `pickup`, `death_fall`) when the milestone needs menus/results.
 Run the checklist in the animation spec §5 for every tag.

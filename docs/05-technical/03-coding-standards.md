@@ -88,7 +88,7 @@ Test đặt tên theo hành vi: `test_hold_jump_reaches_max_height_after_max_hol
 
 - Commit nhỏ, một ý. Message dạng: `feat: ...`, `fix: ...`, `refactor: ...`, `docs: ...`, `art: ...`, `audio: ...`, `test: ...`, `chore: ...`. Dòng đầu ≤ 72 ký tự, nói **vì sao** nếu không hiển nhiên.
 - Nhánh: `main` luôn chạy được; làm việc trên nhánh `ms<N>/<việc>` rồi gộp.
-- File nhị phân (png, ogg, wav, aseprite) qua **Git LFS**.
+- File nhị phân (png, ogg, wav, pxo) qua **Git LFS**.
 - Không commit: thư mục `.godot/`, bản build, file tạm.
 
 ## 8. Checklist trước khi coi một thay đổi là xong

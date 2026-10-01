@@ -1,4 +1,4 @@
-# Pixel Runner (tên tạm)
+# Pixel Odyssey
 
 Endless runner một nút bấm, pixel art, màn hình ngang. Content pack đầu tiên: One Piece — chạy xuyên qua các hòn đảo theo thứ tự trong truyện, chạm để nhảy, ăn item để biến hình, chết là chơi lại từ đầu, thi xem ai đi xa nhất.
 
@@ -10,7 +10,8 @@ Endless runner một nút bấm, pixel art, màn hình ngang. Content pack đầ
 
 ```
 docs/         tài liệu (nguồn sự thật)
-art-source/   nguồn art: ảnh tham khảo, raw AI, file Aseprite, bảng màu   (tạo ở M0)
-tools/        script xử lý asset và kiểm tra                              (tạo ở M0)
+assets/       ảnh tham khảo phong cách
+art-source/   nguồn art: raw AI, file Pixelorama (.pxo), bảng màu
+tools/        script xử lý asset và kiểm tra
 game/         project Godot                                               (tạo ở M0)
 ```

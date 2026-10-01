@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Pixel-art one-button endless runner (Godot 4, GDScript). First content pack: One Piece. A second game (action, Ninja-School-like) will later reuse `game/shared/`.
+Pixel Odyssey — pixel-art one-button endless runner (Godot 4, GDScript). First content pack: One Piece. A second game (action, Ninja-School-like) will later reuse `game/shared/`.
 
 ## Source of truth
 - `docs/` is the source of truth. Start at `docs/README.md`. Decisions: `docs/00-overview/04-decision-log.md`. Milestones: `docs/00-overview/03-milestones.md`. Task list and progress (pick work here, tick it off when done): `docs/00-overview/06-roadmap-and-checklists.md`.
@@ -36,7 +36,7 @@ Pixel-art one-button endless runner (Godot 4, GDScript). First content pack: One
 
 ## Art rules (summary)
 - Native pixel art: character frame 64×64, character ~22–24 px tall, chibi, no black outline, flat 2–3 shades, pivot at bottom-center. Viewport 320×180, integer scaling, Nearest filtering. UI on a 640×360 grid.
-- AI images are "fake pixel art" — always process with `tools/pixelize.py`, then clean up in Aseprite. See `docs/02-art/05-ai-image-pipeline.md`.
+- AI images are "fake pixel art" — always process with `tools/pixelize.py`, then clean up in Pixelorama; export one PNG strip per animation tag and run `tools/check_sprites.py`. See `docs/02-art/05-ai-image-pipeline.md`.
 
 ## Workflows
 Use the project skills in `.claude/skills/` when the task matches: `add-character`, `add-island`, `add-content`, `sprite-pipeline`, `add-audio`, `record-decision`.

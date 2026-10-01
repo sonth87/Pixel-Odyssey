@@ -6,13 +6,13 @@
 g1/
 ├── CLAUDE.md                     quy tắc cho AI agent (đọc mỗi phiên)
 ├── README.md
-├── .gitignore  .gitattributes    (LFS cho ảnh, âm thanh, .aseprite)
+├── .gitignore  .gitattributes    (LFS cho ảnh, âm thanh, .pxo)
 ├── .claude/skills/               skill quy trình (add-character, add-island, ...)
 ├── docs/                         tài liệu (nguồn sự thật)
 ├── assets/                       ảnh tham khảo phong cách (charactors/, 1–3.jpg) — không vào bản build
 ├── tools/                        script ngoài engine (Python, shell)
 │   ├── pixelize.py
-│   ├── export_aseprite.sh
+│   ├── check_sprites.py          kiểm tra dải PNG animation
 │   ├── extract_palette.py
 │   ├── check_layers.py           kiểm tra luật phụ thuộc giữa các lớp
 │   └── check_ip_names.py         kiểm tra không có tên IP trong shared/ và runner/
@@ -20,7 +20,7 @@ g1/
 │   ├── palettes/                 master.gpl, characters/<id>.gpl, segments/<id>.gpl
 │   ├── raw/                      ảnh AI gốc + .prompt.md
 │   ├── processed/                đầu ra pixelize.py
-│   ├── aseprite/                 file .aseprite (nguồn chính của sprite)
+│   ├── pixelorama/               file .pxo (nguồn chính của sprite)
 │   └── audio-raw/                âm gốc + prompt/tham số sfxr
 └── game/                         project Godot (project.godot ở đây)
 ```
@@ -32,7 +32,7 @@ Vì sao project Godot nằm trong `game/` thay vì gốc repo: Godot import mọ
 ```
 game/
 ├── project.godot
-├── addons/                       plugin bên thứ ba (Aseprite Wizard, gdUnit4)
+├── addons/                       plugin bên thứ ba (gdUnit4)
 ├── shared/                       ── dùng chung với game 2 ──
 │   ├── core/
 │   │   ├── event_bus.gd
@@ -103,7 +103,7 @@ game/
 │   │   └── chunks/
 │   ├── onepiece/
 │   │   ├── pack.tres
-│   │   ├── characters/luffy/     luffy.tres, luffy_runner.tres, sprites/, sfx/
+│   │   ├── characters/luffy/     luffy.tres, luffy_runner.tres, sprites/<dạng>/<tag>.png, sfx/
 │   │   ├── islands/alabasta/     alabasta.tres, segments/, chunks/, obstacles/, parallax/, npcs/, events/
 │   │   ├── sea/going_merry/
 │   │   ├── items/

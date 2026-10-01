@@ -27,7 +27,7 @@ Vì sao không chia sẻ gameplay: hai lối chơi khác bản chất; ép một
 1. **Giữ `shared/` sạch**: không tham chiếu runner/app/content (kiểm tra tự động).
 2. **Vẽ animation theo bảng chuẩn**, kể cả chia pha startup/active/recovery cho skill (D-010). Trạng thái G2 không cần vẽ bây giờ, nhưng tên đã chốt.
 3. **`SkillData` có `magnitude` và `tags`** — đủ để game 2 diễn giải; không thêm trường damage/crit/mana bây giờ (sẽ thêm khi game 2 có thiết kế thật, Resource mở rộng dễ dàng).
-4. **Mỗi nhân vật lưu nguồn art đầy đủ** trong `art-source/aseprite/` (không chỉ bản xuất) để game 2 xuất lại theo nhu cầu.
+4. **Mỗi nhân vật lưu nguồn art đầy đủ** trong `art-source/pixelorama/` (không chỉ bản xuất) để game 2 xuất lại theo nhu cầu.
 5. **Tên trung lập** trong code dùng chung.
 
 ## 4. Khi bắt đầu game 2

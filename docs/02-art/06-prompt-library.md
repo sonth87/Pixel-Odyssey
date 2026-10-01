@@ -175,7 +175,7 @@ pixels of different sizes.
 |---|---|---|
 | Phong cách chung | `assets/charactors/l_z_n_s_u_c.png` (6 nhân vật cùng một ảnh) | Model thấy rõ mật độ pixel, tỉ lệ, màu |
 | Nhận diện nhân vật | `assets/charactors/<id>_normal.png` | Giữ đúng trang phục, màu |
-| Frame tiếp theo của animation | Frame đã duyệt gần nhất, **xuất phóng to 16× nearest** từ Aseprite | Giữ nhất quán giữa các frame |
+| Frame tiếp theo của animation | Frame đã duyệt gần nhất, **xuất phóng to 16× nearest** từ Pixelorama | Giữ nhất quán giữa các frame |
 | Nền | 1 sprite nhân vật đã duyệt + (tuỳ chọn) ảnh bố cục phác tay | Ép mật độ pixel của nền bằng nhân vật |
 
 
@@ -184,7 +184,7 @@ pixels of different sizes.
 - **Gemini (Nano Banana / Gemini image)**: rất mạnh ở **chỉnh sửa ảnh có sẵn** (O-EDIT) — cách tốt nhất để ra frame mới mà nhân vật vẫn y hệt. Quy trình nên là: gen 1 frame `idle` thật chuẩn → mọi tư thế khác đều làm bằng O-EDIT từ frame đó.
 - **ChatGPT (GPT image)**: tốt ở dải nhiều frame (O-STRIP) và hiểu bố cục; hay tự thêm viền/nền → nhắc lại AVOID.
 - Cả hai hay vẽ **pixel giả** (ô không đều, viền mờ) → luôn chạy qua `tools/pixelize.py`.
-- Gen 3–4 biến thể, chọn cái tốt nhất, đừng cố sửa prompt cho tới khi hoàn hảo — phần còn lại sửa tay trong Aseprite nhanh hơn.
+- Gen 3–4 biến thể, chọn cái tốt nhất, đừng cố sửa prompt cho tới khi hoàn hảo — phần còn lại sửa tay trong Pixelorama nhanh hơn.
 - Model hay **sai số frame** và **lệch chân** giữa các frame trong O-STRIP → coi O-STRIP là bản nháp tư thế; căn chân, sửa tay là bình thường.
 
 ## 8. Ghi lại prompt đã dùng
@@ -196,6 +196,6 @@ date: YYYY-MM-DD
 references: [đường dẫn các ảnh đính kèm]
 prompt: |
   (prompt đầy đủ đã dùng)
-notes: chọn biến thể 2/4, lệch chân phải 1px, sửa trong Aseprite
+notes: chọn biến thể 2/4, lệch chân phải 1px, sửa trong Pixelorama
 ```
 Vì: khi cần gen lại hoặc gen nhân vật mới cùng kiểu, có công thức chính xác.

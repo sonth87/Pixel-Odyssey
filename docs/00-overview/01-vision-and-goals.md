@@ -1,4 +1,4 @@
-# Tầm nhìn, mong muốn và định hướng phát triển
+# Pixel Odyssey — tầm nhìn, mong muốn và định hướng phát triển
 
 ## 1. Mô tả ngắn
 
@@ -84,5 +84,5 @@ Chi tiết từng milestone: [03-milestones.md](03-milestones.md).
 
 - **Engine**: Godot 4 (bản stable mới nhất tại thời điểm bắt đầu M0, khoá phiên bản trong decision log). `ĐỀ XUẤT` — lý do: 2D pixel art rất tốt, nhẹ, miễn phí, hệ Resource phù hợp thiết kế hướng dữ liệu, có sẵn node Parallax2D.
 - **Ngôn ngữ**: GDScript có khai báo kiểu tĩnh (static typing).
-- **Art**: AI gen ảnh (Gemini / ChatGPT) → script chuyển thành pixel art thật → chỉnh sửa và làm animation trong Aseprite → import Godot. Chi tiết: [02-art/05-ai-image-pipeline.md](../02-art/05-ai-image-pipeline.md).
+- **Art**: AI gen ảnh (Gemini / ChatGPT) → script chuyển thành pixel art thật → chỉnh sửa và làm animation trong Pixelorama → import Godot. Chi tiết: [02-art/05-ai-image-pipeline.md](../02-art/05-ai-image-pipeline.md).
 - **Âm thanh**: chiptune; công cụ ở [03-audio/01-audio-spec.md](../03-audio/01-audio-spec.md).
