@@ -57,31 +57,43 @@ Có cần cả Aseprite **và** Godot không? **Có** — vai trò khác nhau: A
 
 ## 5. Bước ② — `tools/pixelize.py`
 
-Script tự động, viết ở M0. Đặc tả hành vi:
+Code: `tools/pixelize.py` (dòng lệnh), `tools/pixel_art.py` (dò lưới, thu nhỏ, xoá nền, màu), `tools/sprite_frame.py` (đặt khung). Cài: `pip install pillow numpy`.
 
 ### 5.1 Đầu vào / đầu ra
 ```
-python tools/pixelize.py <input.png|thư mục> [tuỳ chọn]
+python tools/pixelize.py <ảnh|thư mục> [tuỳ chọn]
 
---frame 64x64           khung đích (64x64, 128x64, 96x96, 128x128); 'none' cho nền/đồ vật
---grid auto|<n>         kích thước ô pixel trong ảnh gốc; auto = tự dò
---key auto|#FF00FF      màu nền cần xoá; auto = lấy màu ở 4 góc
---palette <file.gpl>    ép về bảng màu (bảng con của nhân vật/đoạn)
---max-colors <n>        nếu không có bảng màu: gom về tối đa n màu
---strip <n>             ảnh là dải n frame → cắt thành n frame riêng
---out <thư mục>         mặc định art-source/processed/<cùng đường dẫn>
+--frame 64x64        khung đích (64x64, 128x64, 96x96, 128x128); 'none' = cắt sát hình (nền, đồ vật)
+--grid <n>           ép kích thước ô pixel của ảnh gốc (mặc định tự dò)
+--key auto|#FF00FF   màu nền; auto = màu phổ biến nhất ở viền ảnh
+--tolerance 40       khoảng cách màu (RGB) để loang xoá nền từ mép ảnh
+--palette <f.gpl>    ép về bảng màu (bảng con của nhân vật/đoạn)
+--max-colors 16      khi không có bảng màu: gom về tối đa n màu
+--strip <n>          ảnh là dải n frame ngang → n frame riêng
+--despeckle <n>      xoá cụm pixel rời ≤ n pixel (mặc định tắt — tránh xoá nhầm khói, tia sáng)
+--preview 8          lưu ảnh xem trước phóng to 8× (0 = không)
+--out <thư mục>      mặc định art-source/processed/<đường dẫn tương ứng trong art-source/raw>
 ```
+Đầu ra: `<tên>.png` (hoặc `<tên>_f1.png`… với dải frame) + `<tên>_preview.png`. Mã thoát ≠ 0 nếu có cảnh báo.
 
 ### 5.2 Các bước xử lý
-1. **Dò lưới**: thử các kích thước ô (ví dụ 8–40 px), với mỗi kích thước thu nhỏ bằng *nearest* rồi phóng lại, đo sai khác so với ảnh gốc; kích thước có sai khác nhỏ nhất là lưới thật. Kiểm tra cả độ lệch (offset) 0..n-1 của lưới. (Cách này đã được dùng để đo ảnh tham khảo: Luffy lưới 16 px → 64×64.)
-2. **Thu nhỏ**: mỗi ô → một pixel, lấy màu **trung vị/phổ biến nhất** ở vùng giữa ô (bỏ viền ô để tránh màu lẫn).
-3. **Xoá nền**: *flood fill từ các mép ảnh* với màu nền ± sai số → trong suốt. Không thay toàn cục (để không xoá nhầm pixel bên trong có màu gần nền, ví dụ da sáng gần màu kem).
-4. **Ép bảng màu**: mỗi pixel → màu gần nhất trong bảng (khoảng cách màu theo cảm nhận, ví dụ CIELAB). Không có bảng → gom cụm về `max-colors`.
-5. **Dọn**: alpha chỉ 0/255; xoá pixel đơn lẻ không nối với hình chính (nhiễu).
-6. **Đặt khung**: cắt sát hình, đặt vào khung đích sao cho **chân ở hàng đáy, thân ở giữa** (tìm cột trung tâm của 4 hàng pixel thấp nhất). Với `--strip`: dùng **cùng một** phép căn cho mọi frame dựa trên frame đầu để giữ chuyển động tương đối.
-7. **Báo cáo**: in ra lưới dò được, số màu trước/sau, kích thước hình, cảnh báo nếu hình vượt khung hoặc dò lưới không chắc chắn (sai khác lớn).
+1. **Dò lưới**: với mỗi kích thước ô ứng viên (3–64 px, bước 0.25, sau đó tinh chỉnh bước 0.02), tìm độ lệch lưới bằng cách khớp "răng lược" với các cạnh màu trong ảnh, rồi đo **sai số dựng lại** (lấy màu giữa mỗi ô, phóng lại, so với ảnh gốc) — chỉ đo trong vùng có hình, không đo nền trống. Ô bằng ước số của ô thật cũng dựng lại tốt, ô bằng bội số thì không → chọn **ô lớn nhất vẫn dựng lại tốt**. Chạy được với ô không nguyên (ảnh 1440 px của Zoro: ô 22.46 px).
+2. **Thu nhỏ**: mỗi ô → một pixel, lấy **trung vị** màu ở nửa giữa ô (bỏ viền ô để tránh màu lẫn).
+3. **Xoá nền**: loang từ mép ảnh với `--tolerance`; thêm vào đó xoá các "lỗ" kín bên trong hình **chỉ khi gần như trùng màu nền** (sai khác ≤ 12) — để khe giữa các chi tiết (giữa kiếm, giữa tay và thân) được xoá mà màu sáng của hình (da, áo trắng) vẫn giữ.
+4. **Ép màu**: theo khoảng cách CIELAB về bảng màu; không có bảng → gom về `--max-colors` màu.
+5. **Dọn** (tuỳ chọn): xoá cụm pixel rời nhỏ.
+6. **Đặt khung**: chân ở hàng đáy, thân ở giữa (cột trung tâm của 4 hàng pixel thấp nhất). Với `--strip`: dùng **cùng một** phép căn của frame đầu cho mọi frame để giữ chuyển động tương đối.
+7. **Báo cáo**: kích thước ô, độ lệch, kích thước gốc, điểm khớp, sai số dựng lại, số màu trước/sau, cảnh báo nếu tràn khung hoặc dò lưới không chắc chắn.
 
-### 5.3 Khi nào script không đủ
+**Kết quả kiểm tra trên 23 ảnh tham khảo** (M0): mọi ảnh nhân vật đơn ra đúng lưới 64×64 (ô 16 px hoặc 22.46 px), sai số dựng lại ≤ 0.3/255. Ảnh tham khảo có vạch mặt đất đứt nét màu sáng — vạch này không bị xoá với `--tolerance 40` (ảnh AI nền magenta không có vạch này).
+
+### 5.3 Bảng màu: `tools/extract_palette.py`
+```
+python tools/extract_palette.py [--input assets/charactors] [--out art-source/palettes] [--merge 6] [--min-count 3]
+```
+Lấy màu từ các ảnh **một nhân vật** (bỏ qua ảnh nhóm vì lưới không nguyên tạo màu pha ở viền), gộp màu gần nhau (ΔE < `--merge`), bỏ màu quá hiếm. Tạo `master.gpl` (hợp của mọi nhân vật) và `characters/<id>.gpl` (mỗi màu được ép về màu gần nhất trong master). Bảng con hiện có 14–28 màu vì gộp cả ảnh biến thể (`nami_money`, `luffy_piston`…); rút gọn tay trong Aseprite khi làm từng nhân vật.
+
+### 5.4 Khi nào script không đủ
 - Lưới trong ảnh AI méo không đều → dò lưới sai → kết quả vỡ. Cách xử lý: thử `--grid` bằng tay; hoặc mở ảnh gốc trong Aseprite, *Sprite → Sprite Size* thu nhỏ nearest, rồi sửa tay.
 - Nhân vật quá chi tiết so với 24 px → phải đơn giản hoá bằng tay.
 

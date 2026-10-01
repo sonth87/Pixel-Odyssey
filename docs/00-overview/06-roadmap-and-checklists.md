@@ -46,8 +46,8 @@ M0 ──► [Tài liệu input/hiển thị/tất định] ──► M1 ──�
 | [ ] M0-04 | Tạo project Godot trong `game/`, cây thư mục theo [project structure](../05-technical/02-project-structure.md), cấu hình hiển thị pixel-perfect theo [tooling §3](../05-technical/06-tooling-and-workflow.md#3-cấu-hình-project-godot-m0) | Claude | M0-02 | Scene trống chạy ở 320×180, phóng to sắc nét |
 | [ ] M0-05 | Cài plugin test gdUnit4, 1 test mẫu chạy được bằng dòng lệnh | Claude | M0-04 | Lệnh test headless pass |
 | [x] M0-06 | Ảnh tham khảo chuyển sang `assets/` (bạn đã làm); cập nhật đường dẫn trong tài liệu | Cả hai | — | Không còn link tới đường dẫn cũ |
-| [ ] M0-07 | `tools/extract_palette.py` → `art-source/palettes/master.gpl` + bảng con cho 8 nhân vật | Claude | M0-06 | File .gpl mở được trong Aseprite |
-| [ ] M0-08 | `tools/pixelize.py` theo [pipeline §5](../02-art/05-ai-image-pipeline.md) + chạy thử trên **toàn bộ** ảnh tham khảo | Claude | M0-07 | Ảnh tham khảo → 64×64 đúng lưới, báo cáo lưới dò được |
+| [x] M0-07 | `tools/extract_palette.py` → `art-source/palettes/master.gpl` + bảng con cho 8 nhân vật | Claude | M0-06 | File .gpl mở được trong Aseprite |
+| [x] M0-08 | `tools/pixelize.py` theo [pipeline §5](../02-art/05-ai-image-pipeline.md) + chạy thử trên **toàn bộ** ảnh tham khảo | Claude | M0-07 | Ảnh tham khảo → 64×64 đúng lưới, báo cáo lưới dò được |
 | [ ] M0-09 | Cài Aseprite (hoặc chọn Pixelorama) | Bạn | — | |
 | [ ] M0-10 | Gen ảnh Luffy `idle` bằng Gemini theo prompt soạn sẵn; lưu raw + `.prompt.md` | Cả hai | — | Có ảnh raw được chọn |
 | [ ] M0-11 | Chạy `pixelize.py` trên ảnh vừa gen; sửa tay trong Aseprite; tạo `luffy.aseprite` với tag `idle` | Cả hai | M0-08, M0-09, M0-10 | Qua checklist sprite (mục 9.2) |
