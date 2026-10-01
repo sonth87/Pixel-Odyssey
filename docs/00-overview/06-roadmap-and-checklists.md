@@ -51,7 +51,7 @@ M0 ──► [Tài liệu input/hiển thị/tất định] ──► M1 ──�
 | [ ] M0-09 | Cài Aseprite (hoặc chọn Pixelorama) | Bạn | — | |
 | [ ] M0-10 | Gen ảnh Luffy `idle` bằng Gemini theo prompt soạn sẵn; lưu raw + `.prompt.md` | Cả hai | — | Có ảnh raw được chọn |
 | [ ] M0-11 | Chạy `pixelize.py` trên ảnh vừa gen; sửa tay trong Aseprite; tạo `luffy.aseprite` với tag `idle` | Cả hai | M0-08, M0-09, M0-10 | Qua checklist sprite (mục 9.2) |
-| [ ] M0-12 | `tools/export_aseprite.sh`; xuất sheet + JSON vào `game/content/onepiece/characters/luffy/sprites/` | Claude | M0-11 | File xuất đúng chỗ |
+| [~] M0-12 | `tools/export_aseprite.sh`; xuất sheet + JSON vào `game/content/onepiece/characters/luffy/sprites/` | Claude | M0-11 | File xuất đúng chỗ |
 | [ ] M0-13 | Scene thử hiển thị Luffy `idle` đúng pivot, pixel-perfect | Claude | M0-04, M0-12 | Chụp màn hình 4×: pixel vuông, chân đúng mặt đất |
 | [~] M0-14 | Viết tài liệu **input / hiển thị / tất định** (`05-technical/08-input-rendering-determinism.md`): đơn vị số nguyên, nhận chạm theo tick, nội suy hình, cuộn pixel, tỉ lệ màn hình | Claude | — | Bạn duyệt; các thông số physics quy đổi sang nguyên |
 | [ ] M0-15 | Đóng M0: cập nhật tài liệu theo thực tế (thời gian làm 1 frame, lỗi của pixelize), chia việc chi tiết M2 | Claude | tất cả | Checklist mục 10 |
