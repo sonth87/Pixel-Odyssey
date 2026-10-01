@@ -21,7 +21,7 @@ Pixel-art one-button endless runner (Godot 4, GDScript). First content pack: One
 - `shared/` must not reference `runner/`, `app/`, or `content/`. `runner/` must not reference `app/` or a specific pack path. Only `ContentRegistry` knows the active pack.
 - No IP names (luffy, zoro, gomu, marine, ...) in `shared/` or `runner/` code; use neutral concepts (`transform_item`, `ground_enemy`, `power_up`).
 - Data-driven: new characters/islands/items/obstacles = Resources + assets, not code branches. Behavior differences come from data or effect subclasses, never `if id == ...`.
-- Determinism: gameplay only in `_physics_process` at 60 ticks; all randomness via `RunContext` RNG streams (`chunks`, `items`, `fruits`, `cosmetic`); never global `randi()/randf()` in `runner/`.
+- Determinism: gameplay simulation uses integer fixed-point (1/256 px, no `float`/`Vector2`/`delta`; beware GDScript int `/` truncates toward zero — use `fdiv`), see `docs/05-technical/08-input-rendering-determinism.md`. Gameplay only in `_physics_process` at 60 ticks; all randomness via `RunContext` RNG streams (`chunks`, `items`, `fruits`, `cosmetic`); never global `randi()/randf()` in `runner/`.
 - Autoloads are fixed: `EventBus`, `Settings`, `Save`, `Audio`, `ContentRegistry`. Adding one requires a decision-log entry.
 - Animation tag names follow `docs/02-art/02-character-animation-spec.md` exactly; skills use `skill_N_startup/active/recovery`.
 

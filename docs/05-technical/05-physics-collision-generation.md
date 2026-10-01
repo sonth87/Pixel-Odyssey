@@ -32,7 +32,7 @@ Code: thông số nằm trong một Resource `RunnerPhysicsConfig` (`runner/phys
 | Vận tốc nảy khi đạp | `stomp_bounce_velocity` | 220 px/s |
 | Thời gian giữ tối đa khi nảy | `stomp_max_hold_time` | 0.13 s (8 tick) |
 
-Nhảy kích hoạt **khi chạm xuống** (touch down), không phải khi thả. "Giữ" tính từ lúc chạm xuống tới lúc thả. Input được ghi nhận ở **tick vật lý tiếp theo** — chi tiết độ trễ ở tài liệu input/rendering (sẽ viết).
+Nhảy kích hoạt **khi chạm xuống** (touch down), không phải khi thả. "Giữ" tính từ lúc chạm xuống tới lúc thả. Input được ghi nhận ở **tick vật lý tiếp theo** — chi tiết ở [input/hiển thị/tất định](08-input-rendering-determinism.md).
 
 Vì sao rơi nhanh hơn lên (1.15): cú nhảy "chắc tay", không lơ lửng. Vì sao giảm trọng lực khi giữ: độ cao biến thiên liên tục theo thời gian giữ → điều khiển tinh hơn.
 

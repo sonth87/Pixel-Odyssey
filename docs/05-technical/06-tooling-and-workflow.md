@@ -56,6 +56,9 @@ art-source/processed/
 | Physics → Common → Max Physics Steps per Frame | 8 | |
 | GDScript → Warnings → Untyped Declaration | Error | Bắt buộc kiểu tĩnh |
 | Orientation (mobile) | Landscape | |
+| Application → Run → Max FPS | 60 | Vẽ khoá 60 khung — [input/hiển thị §3](08-input-rendering-determinism.md#3-hiển-thị) |
+| Input Devices → Pointing → Emulate Mouse From Touch | tắt | Không nhận một chạm thành hai sự kiện |
+| Input Devices → Pointing → Emulate Touch From Mouse | tắt | |
 
 Lưới UI 640×360 (D-017): UI nằm trong `CanvasLayer` riêng render qua `SubViewport` 640×360 phóng nguyên lần — chi tiết làm ở M4.
 
