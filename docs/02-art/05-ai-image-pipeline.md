@@ -115,7 +115,7 @@ Lấy màu từ các ảnh **một nhân vật** (bỏ qua ảnh nhóm vì lư�
 3. Sửa pixel lỗi, làm silhouette rõ hơn, đồng nhất màu giữa các frame.
 4. Vẽ frame xen giữa còn thiếu.
 5. Chạy thử từng tag ở 1× và 4×.
-6. Chạy checklist ở [animation spec](02-character-animation-spec.md#5-checklist-duyệt-một-bộ-animation).
+6. Chạy checklist ở [animation spec](02-character-animation-spec.md#6-checklist-duyệt-một-bộ-animation).
 
 ### 6.3 Nền tileable
 - Bật chế độ lặp ô (*Tile Mode*) theo trục ngang để thấy mép trái/phải nối nhau; sửa đường nối trực tiếp.

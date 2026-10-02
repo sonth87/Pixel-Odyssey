@@ -29,7 +29,7 @@ Order — each step uses the previous approved frame as reference (O-EDIT):
 3. Transform form (`<id>_<form>.pxo`, strips in `sprites/<form>/`): `transform_enter`, `transform_exit`, `form_idle`, `form_run`, `form_jump_rise`, `form_fall`, `form_land`, `form_attack`.
 4. Skill tags for skills with a runner role: `skill_N_startup/active/recovery`.
 5. B2 tags (`sit`, `sit_idle`, `cheer`, `taunt`, `pickup`, `death_fall`) when the milestone needs menus/results.
-Run the checklist in the animation spec §5 for every tag.
+Follow the pose principles (animation spec §3) and run the checklist (§6) for every tag.
 
 ## 4. Data (in `game/content/<pack>/characters/<id>/`)
 1. `<id>.tres` — `CharacterData` (forms, skills, sfx, portrait, name key).

@@ -22,26 +22,25 @@ FAR = {'thigh': C('#224C6E'), 'thigh_edge': C('#224C6E'), 'cuff': C('#B7B9C8'),
 
 # Leg poses as joint offsets from the hip: (knee, ankle, foot direction).
 LEGS = {
-    'contact':  ((2, 3), (4, 6), 1),     # front foot reaches the ground, knee almost straight
-    'support':  ((1, 3), (0, 6), 1),     # weight on it, knee bent forward over the foot
-    'trail':    ((-2, 3), (-5, 5), -1),  # pushed off, leg stretched behind
-    'trail_up': ((-1, 3), (-4, 1), -1),  # heel rising behind after push-off
-    'fold':     ((4, 2), (-2, 1), -1),   # knee forward, shin folded back, heel under the seat
-    'drive':    ((4, 1), (3, 5), 1),     # knee high in front, shin hanging
+    'reach':    ((3, 2), (5, 6), 1),     # front leg forward, knee bent, heel down ahead
+    'trail_hi': ((-2, 3), (-6, 1), -1),  # rear leg stretched back, foot kicked high
+    'support':  ((1, 3), (0, 6), 1),
+    'fold':     ((4, 2), (-2, 1), -1),
+    'spread':   ((3, 2), (5, 5), 1),     # front leg in flight, knee bent
 }
 ARMS = {
-    'fwd':  ["..A..", "..AA.", "...AA"],
-    'back': ["..A..", ".AA..", "AA..."],
+    'fwd':  ["..A..", "..A.A", "..AAA"],   # elbow bent 90 degrees, fist up in front of the chest
+    'back': ["..A..", ".AA..", "A...."],   # elbow pulled back behind the body
     'mid':  ["..A..", "..A..", "..AA."],
 }
 # (bob, near leg, far leg, near arm, far arm)
 FRAMES = [
-    (0, 'contact', 'trail_up', 'back', 'fwd'),
+    (0, 'reach', 'trail_hi', 'back', 'fwd'),
     (1, 'support', 'fold', 'mid', 'mid'),
-    (-2, 'trail', 'drive', 'fwd', 'back'),
-    (0, 'trail_up', 'contact', 'fwd', 'back'),
+    (-2, 'trail_hi', 'spread', 'fwd', 'back'),
+    (0, 'trail_hi', 'reach', 'fwd', 'back'),
     (1, 'fold', 'support', 'mid', 'mid'),
-    (-2, 'drive', 'trail', 'back', 'fwd'),
+    (-2, 'spread', 'trail_hi', 'back', 'fwd'),
 ]
 LEAN = [(0, 10, 2), (10, 13, 1), (13, 16, 0)]   # (row from, row to, x shift): head +2, chest +1, hips 0
 NEAR_SHOULDER, FAR_SHOULDER = (11, 3), (11, 10)
@@ -114,9 +113,9 @@ for i, f in enumerate(frames):
     ys = np.nonzero(f[:, :, 3])[0]
     assert ys.max() <= GROUND, f'frame {i + 1} goes below the ground row'
 strip = np.concatenate(frames, axis=1)
-Image.fromarray(strip, 'RGBA').save(OUT + 'run8.png')
+Image.fromarray(strip, 'RGBA').save(OUT + 'run9.png')
 zoom = np.concatenate([f[36:64, 18:48] for f in frames], axis=1)
 bg = Image.new('RGBA', (zoom.shape[1], zoom.shape[0]), (252, 245, 234, 255))
 bg.alpha_composite(Image.fromarray(zoom, 'RGBA'))
-bg.resize((zoom.shape[1] * 12, zoom.shape[0] * 12), Image.NEAREST).save(OUT + 'run8_zoom.png')
+bg.resize((zoom.shape[1] * 12, zoom.shape[0] * 12), Image.NEAREST).save(OUT + 'run9_zoom.png')
 print('grounded rows:', [int(np.nonzero(f[:, :, 3])[0].max()) for f in frames])

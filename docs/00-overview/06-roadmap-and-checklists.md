@@ -162,7 +162,7 @@ Từ giữa M2: bắt đầu art Alabasta (nền đoạn 1–2, chướng ngại
 - [ ] Alpha chỉ 0/255; không viền đen; màu trong bảng con.
 - [ ] Đọc được ở 1× trên mọi nền nó xuất hiện.
 - [ ] Tag đúng tên chuẩn; loop không rung.
-- Chi tiết: [animation spec §5](../02-art/02-character-animation-spec.md#5-checklist-duyệt-một-bộ-animation), [obstacles spec §7](../02-art/04-obstacles-items-vfx-ui-spec.md#7-checklist-duyệt).
+- Chi tiết: [animation spec §6](../02-art/02-character-animation-spec.md#6-checklist-duyệt-một-bộ-animation), [obstacles spec §7](../02-art/04-obstacles-items-vfx-ui-spec.md#7-checklist-duyệt).
 
 ### 9.3 Chunk
 - [ ] Vùng đệm 48 px hai đầu; entry/exit height khớp.

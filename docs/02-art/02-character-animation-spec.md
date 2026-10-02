@@ -99,7 +99,31 @@ Vì sao chia pha: ở game 2, vùng gây sát thương chỉ bật trong `active
 | Game 1 đầy đủ (B1 + B2) | ~55–65 |
 | Game 2 thêm (G2) | ~80–110 |
 
-## 3. Mô tả chi tiết và prompt tư thế
+## 3. Nguyên tắc dáng (rút từ ảnh mẫu)
+
+Ảnh mẫu dáng: `sample/image copy 2.png` (bảng sprite "Runa": đứng, đi, chạy, nhảy, rơi), `sample/image.png` (một frame chạy), `sample/image copy.png` (bảng sprite cậu bé áo choàng). Khi gen ảnh AI cho một tư thế, **đính kèm ảnh mẫu dáng tương ứng** cùng ảnh nhận diện nhân vật.
+
+Nguyên tắc chung:
+- **Nhìn nghiêng thật**: đầu, mặt, thân quay hẳn sang phải (một mắt, mũi/miệng ở mép phải, tóc ra sau). Đây là yếu tố lớn nhất khiến dáng chạy/đi đọc được. Thân nhìn thẳng mà chân chạy ngang sẽ luôn trông gượng.
+- **Đường nét hành động**: mỗi frame có một hướng chủ đạo rõ (chạy: chéo về trước; nhảy lên: thẳng đứng kéo dài; rơi/đáp: co tròn).
+- **Tương phản lớn giữa các frame**: tay chân thay đổi vị trí nhiều pixel, không nhích 1 px.
+
+| Trạng thái | Thân | Chân | Tay |
+|---|---|---|---|
+| `idle` | Thẳng, nhún 1 px | Hai chân hơi dạng, thẳng | Buông, có thể nắm hờ |
+| `walk` (G2) | **Thẳng đứng**, nhún nhẹ | Hình chữ "V" hẹp kiểu kéo kéo, gối gần thẳng, gót chạm đất trước | Vung nhỏ, gần thân, khuỷu gần thẳng |
+| `run` | **Đổ về trước rõ** | **Xoạc rộng** (khoảng cách hai bàn chân ≈ 0.5–0.6 chiều cao nhân vật); chân sau duỗi ra sau, **bàn chân sau đá cao** (ngang gối hoặc hông); chân trước gối gập, cẳng chân chéo xuống trước. Hầu như mọi frame đều có một chân sau đá cao; frame "lướt qua" chân gập gọn dưới hông | **Khuỷu gập ~90°, nắm đấm**: tay trước nắm ngang ngực/cằm, tay sau khuỷu kéo ra sau lưng; ngược chiều chân |
+| `run_fast` | Đổ sâu hơn `run` | Xoạc rộng hơn, đá cao hơn | Vung mạnh hơn |
+| `jump_start` | Ngồi thụp (lấy đà) | **Gối gập sâu**, hai bàn chân đặt sát | Tay kéo xuống sau |
+| `jump_rise` | **Duỗi thẳng đứng**, kéo dài | Hai chân khép, duỗi thẳng xuống, mũi chân chúc | **Một tay vươn thẳng lên trời** |
+| `jump_apex` | Hơi co | **Gối co lên trước bụng** (thu chân) | Tay mở hai bên giữ thăng bằng |
+| `fall` | Hơi ngả | Chân duỗi xuống chuẩn bị đáp, có thể lệch nhau | Tay giơ lên ngang vai |
+| `land` | Ngồi thụp như `jump_start` | Gối gập sâu hấp thụ lực | Tay ra trước |
+| `death_hit` / `knockback` | Văng ngửa, nghiêng mạnh | Tay chân **xoè tung** về phía sau | Như chân |
+
+Đo trên Luffy (22–24 px): xoạc chạy ≈ 11–13 px, bàn chân sau đá lên tới hàng ngang gối/hông (cách đất 4–6 px), thân đổ: đầu lệch trước 2 px (chạy) / 3 px (chạy nhanh).
+
+## 4. Mô tả chi tiết và prompt tư thế
 
 Prompt tư thế (khối `P-*`) ghép theo [prompt library](06-prompt-library.md): `S-CHAR + C-<NHÂN VẬT> + P-<TƯ THẾ> + O-... + AVOID`. Với frame thứ hai trở đi nên dùng `O-EDIT` từ frame `idle` đã duyệt.
 
@@ -277,7 +301,7 @@ Recovery: the stretched arm snapping back toward the body in a wavy rubber shape
 returning to a ready stance.
 ```
 
-## 4. Prompt hoàn chỉnh — ví dụ để copy (Luffy `idle`)
+## 5. Prompt hoàn chỉnh — ví dụ để copy (Luffy `idle`)
 
 > Luffy đã có sprite tham chiếu đúng chuẩn nên `idle` dùng thẳng `luffy_normal.png` (xem [prompt library §7](06-prompt-library.md#7-mẹo-theo-model)). Prompt dưới đây là mẫu cho **nhân vật chưa có tham chiếu**; khi dùng, ghép thêm khối P-ANATOMY sau phần "Character".
 
@@ -319,7 +343,7 @@ pushing off the ground with both feet in the air, body leaning forward, arms swi
 opposite to the legs. Keep the plain pure magenta (#FF00FF) background.
 ```
 
-## 5. Checklist duyệt một bộ animation
+## 6. Checklist duyệt một bộ animation
 
 - [ ] Khung đúng kích thước (64/96/128), pivot giữa đáy, chân đúng hàng đáy ở mọi frame chạm đất.
 - [ ] Không pixel bán trong suốt; không viền đen; màu thuộc bảng con của nhân vật.
