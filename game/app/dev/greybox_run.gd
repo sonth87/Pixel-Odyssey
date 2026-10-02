@@ -8,6 +8,7 @@ const RESTART_DELAY_TICKS := 24
 const TIME_SCALES: Array[float] = [1.0, 0.5, 0.25]
 ## Camera follows ground height (not jump arcs), smoothed over this long (physics doc §9).
 const CAMERA_SMOOTH_SECONDS := 0.25
+const REVIVE_SKIP_PX := 64
 const SKY := Color(0.988, 0.961, 0.918)
 const GROUND := Color(0.894, 0.863, 0.82)
 const GROUND_EDGE := Color(0.78, 0.74, 0.69)
@@ -32,6 +33,7 @@ var _time_scale_index := 0
 var _jump_meter := JumpMeter.new()
 var _camera_y_px: float = ChunkLayout.GROUND_Y_PX
 var _camera_target_y_px: float = ChunkLayout.GROUND_Y_PX
+var _invincible := false
 
 @onready var _input: InputCollector = %InputCollector
 @onready var _hud: Label = %Hud
@@ -50,6 +52,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	match key.physical_keycode:
 		KEY_F1:
 			_overlay = not _overlay
+		KEY_F3:
+			_invincible = not _invincible
 		KEY_F4:
 			_time_scale_index = (_time_scale_index + 1) % TIME_SCALES.size()
 			Engine.time_scale = TIME_SCALES[_time_scale_index]
@@ -67,6 +71,23 @@ func _physics_process(_delta: float) -> void:
 	var was_grounded := _run.body.grounded
 	_run.step(input)
 	_jump_meter.observe(_run.body, input, was_grounded, _physics)
+	if _invincible and _run.body.is_dead():
+		_revive()
+
+
+## Debug-only convenience (F3): teleports past whatever killed the body rather than special-casing debug
+## state inside the deterministic simulation. Distance/seed stay real; only this run's recorded path skips.
+func _revive() -> void:
+	var body := _run.body
+	body.death = RunnerBody.Death.NONE
+	body.vy = 0
+	body.x += Fixed.from_px(REVIVE_SKIP_PX)
+	var ground := _run.terrain.ground_at(body.x)
+	if ground != Terrain.NO_GROUND:
+		body.y = ground
+		body.grounded = true
+	else:
+		body.grounded = false
 
 
 func _process(delta: float) -> void:
@@ -148,9 +169,10 @@ func _restart() -> void:
 func _hud_text() -> String:
 	var body := _run.body
 	var status := "DEAD (%s) - tap to retry" % RunnerBody.Death.keys()[body.death] if body.is_dead() else _jump_meter.last
-	return "%d m  %d px/s  chunk %s  lvl %d  stomps %d  seed %d\n%s\nF1 overlay  F4 slow-mo x%.2f  R restart" % [
+	return "%d m  %d px/s  chunk %s  lvl %d  stomps %d  seed %d%s\n%s\nF1 overlay  F3 invincible  F4 slow-mo x%.2f  R restart" % [
 		_run.distance_m(), _run.speed_px_per_second(body.x), _run.spawner.chunk_id_at(Fixed.to_px(body.x)),
-		_run.target_difficulty(body.x), _run.stomps, run_seed - 1, status, TIME_SCALES[_time_scale_index]]
+		_run.target_difficulty(body.x), _run.stomps, run_seed - 1, "  INVINCIBLE" if _invincible else "",
+		status, TIME_SCALES[_time_scale_index]]
 
 
 ## Measures the last jump (hold ticks, height) for tuning.
