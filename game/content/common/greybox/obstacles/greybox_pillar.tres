@@ -6,4 +6,4 @@
 script = ExtResource("1")
 id = &"greybox_pillar"
 category = &"ground_tall"
-hitbox = Rect2i(-5, -32, 10, 32)
+hitbox = Rect2i(-5, -28, 10, 28)
