@@ -54,6 +54,7 @@ Có cần cả Pixelorama **và** Godot không? **Có** — vai trò khác nhau:
 - Frame chuẩn: nếu nhân vật **đã có sprite tham chiếu đúng chuẩn** (như `assets/charactors/<id>_normal.png`) → dùng thẳng nó làm `idle` frame 1 (pixelize + xoá vạch mặt đất), không gen lại. Chỉ gen frame chuẩn cho nhân vật chưa có tham chiếu, và phải ghép khối P-ANATOMY.
 - Mọi tư thế khác làm bằng **O-EDIT** từ frame đã duyệt (phóng to 16× nearest trước khi gửi).
 - Với chu kỳ chạy: dùng AI cho 2–3 **tư thế chính** (key pose), các frame xen giữa vẽ tay trong Pixelorama bằng onion skin. Nhân vật cao 24 px nên vẽ tay một frame chỉ mất vài phút.
+- **Frame chỉ khác frame chuẩn ở tay/chân** (chạy, nhảy, đáp, nhịp thở): Claude có thể **vẽ trực tiếp bằng code** từ frame chuẩn — giữ nguyên thân trên, vẽ lại chân/tay theo lưới ký tự, nhún thân 1 px. Luffy `idle` (nhịp thở) và `run` (6 frame) được làm như vậy (2026-10-02). Dùng AI cho tư thế đổi hẳn dáng người (biến hình, chiêu thức, nằm, ngồi).
 - Chấp nhận thực tế: AI làm ~60–70% công việc, phần còn lại là sửa tay.
 
 ## 5. Bước ② — `tools/pixelize.py`
@@ -101,7 +102,7 @@ Lấy màu từ các ảnh **một nhân vật** (bỏ qua ảnh nhóm vì lư�
 ## 6. Bước ③ — Pixelorama
 
 ### 6.1 Cấu trúc file
-- **Một file `.pxo` cho mỗi nhân vật-dạng / mỗi kẻ địch**: `art-source/pixelorama/characters/luffy.pxo` (dạng thường), `luffy_gear4.pxo` (dạng biến hình, canvas 96×96).
+- File `.pxo` **chỉ tạo khi có người sửa tay** (nhập dải PNG vào Pixelorama dạng sprite sheet, sửa, xuất lại dải). Dải PNG trong `game/content/` mới là bản dùng trong game. Khi có: một file cho mỗi nhân vật-dạng / kẻ địch, ví dụ `art-source/pixelorama/characters/luffy.pxo`, `luffy_gear4.pxo` (canvas 96×96).
 - Canvas = kích thước khung (64×64 / 96×96...).
 - Mỗi animation là một **tag** đặt tên đúng [bảng trạng thái](02-character-animation-spec.md) (`idle`, `run`, `jump_rise`...). Tag trong `.pxo` chỉ để làm việc cho tiện; game dùng tên file khi xuất (mục 7).
 - Layer: `body` (chính); thêm layer `fx` nếu có hiệu ứng vẽ liền sprite. Không để layer ẩn chứa rác.

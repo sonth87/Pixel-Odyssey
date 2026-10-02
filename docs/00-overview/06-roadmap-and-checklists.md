@@ -50,7 +50,7 @@ M0 ──► [Tài liệu input/hiển thị/tất định] ──► M1 ──�
 | [x] M0-08 | `tools/pixelize.py` theo [pipeline §5](../02-art/05-ai-image-pipeline.md) + chạy thử trên **toàn bộ** ảnh tham khảo | Claude | M0-07 | Ảnh tham khảo → 64×64 đúng lưới, báo cáo lưới dò được |
 | [x] M0-09 | Cài Pixelorama (miễn phí) | Bạn | — | Mở được, nhập được bảng màu `.gpl` |
 | [x] M0-10 | Gen ảnh Luffy `idle` bằng Gemini theo prompt soạn sẵn; lưu raw + `.prompt.md` | Cả hai | — | Có ảnh raw được chọn |
-| [~] M0-11 | Chạy `pixelize.py` trên ảnh vừa gen; sửa tay trong Pixelorama; tạo `art-source/pixelorama/characters/luffy.pxo` với tag `idle` | Cả hai | M0-08, M0-09, M0-10 | Qua checklist sprite (mục 9.2) |
+| [x] M0-11 | Frame Luffy `idle` (từ ảnh tham chiếu, nhịp thở) + nháp `run` 6 frame vẽ bằng code; `.pxo` chỉ tạo khi cần sửa tay | Claude | M0-08 | `check_sprites.py` pass; render trong Godot đúng vị trí |
 | [x] M0-12 | Định dạng dải PNG mỗi animation (D-029) + `tools/check_sprites.py`; xuất `idle.png` vào `game/content/onepiece/characters/luffy/sprites/base/` | Cả hai | M0-11 | `check_sprites.py` pass |
 | [x] M0-13 | Scene thử hiển thị Luffy `idle` đúng pivot, pixel-perfect | Claude | M0-04, M0-12 | Chụp màn hình 4×: pixel vuông, chân đúng mặt đất |
 | [~] M0-14 | Viết tài liệu **input / hiển thị / tất định** (`05-technical/08-input-rendering-determinism.md`): đơn vị số nguyên, nhận chạm theo tick, nội suy hình, cuộn pixel, tỉ lệ màn hình | Claude | — | Bạn duyệt; các thông số physics quy đổi sang nguyên |
@@ -93,7 +93,7 @@ Song song phía Bạn trong M1: gen + sửa các frame B1 của Luffy (chuẩn b
 
 | ID | Việc | Ai | Phụ thuộc |
 |---|---|---|---|
-| [ ] M2-01 | Art Luffy B1: `run`, `jump_start`, `jump_rise`, `jump_apex`, `fall`, `land`, `hurt`, `death_hit`, `death_lie`, `death_fall`, `eat` (Claude soạn prompt từng tag, bạn gen + sửa) | Cả hai | M0 |
+| [ ] M2-01 | Art Luffy B1 (`run` đã có nháp — tinh chỉnh): `jump_start`, `jump_rise`, `jump_apex`, `fall`, `land`, `hurt`, `death_hit`, `death_lie`, `death_fall`, `eat` (Claude soạn prompt từng tag, bạn gen + sửa) | Cả hai | M0 |
 | [ ] M2-02 | Art Gear 4 (khung 96): `transform_enter/exit`, `form_idle/run/jump_rise/fall/land/attack` | Cả hai | M2-01 |
 | [ ] M2-03 | `CharacterData`, `CharacterFormData`, `AnimationSet`, `SkillData`, `RunnerCharacterProfile` + dữ liệu Luffy | Claude | M1 |
 | [ ] M2-04 | `CharacterView` chọn animation theo trạng thái; FPS chạy co giãn theo tốc độ | Claude | M2-03 |
