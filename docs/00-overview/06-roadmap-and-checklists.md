@@ -53,8 +53,8 @@ M0 ──► [Tài liệu input/hiển thị/tất định] ──► M1 ──�
 | [x] M0-11 | Frame Luffy `idle` (từ ảnh tham chiếu, nhịp thở) + nháp `run` 6 frame vẽ bằng code; `.pxo` chỉ tạo khi cần sửa tay | Claude | M0-08 | `check_sprites.py` pass; render trong Godot đúng vị trí |
 | [x] M0-12 | Định dạng dải PNG mỗi animation (D-029) + `tools/check_sprites.py`; xuất `idle.png` vào `game/content/onepiece/characters/luffy/sprites/base/` | Cả hai | M0-11 | `check_sprites.py` pass |
 | [x] M0-13 | Scene thử hiển thị Luffy `idle` đúng pivot, pixel-perfect | Claude | M0-04, M0-12 | Chụp màn hình 4×: pixel vuông, chân đúng mặt đất |
-| [~] M0-14 | Viết tài liệu **input / hiển thị / tất định** (`05-technical/08-input-rendering-determinism.md`): đơn vị số nguyên, nhận chạm theo tick, nội suy hình, cuộn pixel, tỉ lệ màn hình | Claude | — | Bạn duyệt; các thông số physics quy đổi sang nguyên |
-| [ ] M0-15 | Đóng M0: cập nhật tài liệu theo thực tế (thời gian làm 1 frame, lỗi của pixelize), chia việc chi tiết M2 | Claude | tất cả | Checklist mục 10 |
+| [x] M0-14 | Viết tài liệu **input / hiển thị / tất định** (`05-technical/08-input-rendering-determinism.md`): đơn vị số nguyên, nhận chạm theo tick, nội suy hình, cuộn pixel, tỉ lệ màn hình | Claude | — | Bạn duyệt; các thông số physics quy đổi sang nguyên |
+| [x] M0-15 | Đóng M0: cập nhật tài liệu theo thực tế (thời gian làm 1 frame, lỗi của pixelize), chia việc chi tiết M2 | Claude | tất cả | Checklist mục 10 |
 
 Có thể làm song song: M0-01/04/05/06/07/08/14 (Claude) cùng lúc với M0-02/09/10 (Bạn).
 
@@ -66,10 +66,10 @@ Có thể làm song song: M0-01/04/05/06/07/08/14 (Claude) cùng lúc với M0-0
 
 | ID | Việc | Ai | Phụ thuộc | Xong khi |
 |---|---|---|---|---|
-| [ ] M1-01 | Thư viện số nguyên cố định (`shared/core/math/`) + `RunnerPhysicsConfig` | Claude | M0-14 | Test: bảng nhảy trong [physics §2](../05-technical/05-physics-collision-generation.md#2-nhảy) khớp ±1 px |
-| [ ] M1-02 | `RngStreams` (4 luồng từ 1 seed) | Claude | — | Test tất định: cùng seed → cùng chuỗi |
-| [ ] M1-03 | Xử lý input: chạm xuống = nhảy, giữ, jump buffer, coyote; ghi/phát lại input | Claude | M1-01 | Test buffer/coyote; phát lại run cho cùng kết quả |
-| [ ] M1-04 | `RunnerBody`, `JumpController`, state machine (Running/Airborne/Dead) | Claude | M1-01, M1-03 | Nhảy chạm/giữ đúng độ cao |
+| [x] M1-01 | Thư viện số nguyên cố định (`shared/core/math/`) + `RunnerPhysicsConfig` | Claude | M0-14 | Test: bảng nhảy trong [physics §2](../05-technical/05-physics-collision-generation.md#2-nhảy) khớp ±1 px |
+| [x] M1-02 | `RngStreams` (4 luồng từ 1 seed) | Claude | — | Test tất định: cùng seed → cùng chuỗi |
+| [~] M1-03 | Xử lý input: chạm xuống = nhảy, giữ, jump buffer, coyote; ghi/phát lại input | Claude | M1-01 | Test buffer/coyote; phát lại run cho cùng kết quả |
+| [~] M1-04 | `RunnerBody`, `JumpController`, state machine (Running/Airborne/Dead) | Claude | M1-01, M1-03 | Nhảy chạm/giữ đúng độ cao |
 | [ ] M1-05 | Địa hình: mặt đất, hố, bậc, tự bước lên, corner correction, `WALL`, `PIT` | Claude | M1-04 | Test corner correction 6/7 px |
 | [ ] M1-06 | `Obstacle` + `StaticBehavior` + `ChargerBehavior` + hitbox/hurtbox | Claude | M1-04 | Kẻ địch lao tới kích hoạt theo vị trí |
 | [ ] M1-07 | `CollisionResolver`: thường, khiên (qua debug), i-frames, đạp | Claude | M1-05, M1-06 | Test các ô tương ứng của ma trận |

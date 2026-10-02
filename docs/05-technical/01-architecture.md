@@ -105,7 +105,7 @@ State machine là lớp chung `shared/core/state_machine` (mỗi trạng thái m
 
 ### 4.3 Va chạm
 
-Không dùng bộ giải vật lý của Godot cho người chơi (không `CharacterBody2D.move_and_slide` với lực/ma sát). `RunnerBody` tự tính vị trí theo công thức ở [physics](05-physics-collision-generation.md), va chạm mặt đất bằng truy vấn tile/hình chữ nhật, va chạm nguy hiểm bằng `Area2D` (hurtbox/hitbox). Vì: kiểm soát hoàn toàn cảm giác nhảy, tất định, validator dùng **cùng một hàm tích phân** với game.
+Không dùng bộ giải vật lý của Godot cho người chơi (không `CharacterBody2D.move_and_slide` với lực/ma sát). `RunnerBody` tự tính vị trí theo công thức ở [physics](05-physics-collision-generation.md), va chạm mặt đất và va chạm nguy hiểm (hurtbox/hitbox) đều bằng phép so hình chữ nhật số nguyên trong mô phỏng, không dùng `Area2D` — vì `Area2D` chạy bằng số thực và theo nhịp của bộ vật lý Godot, phá tính tất định (D-027). Vì: kiểm soát hoàn toàn cảm giác nhảy, tất định, validator dùng **cùng một hàm tích phân** với game.
 
 ## 5. Tính tất định
 
