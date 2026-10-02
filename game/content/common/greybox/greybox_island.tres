@@ -29,4 +29,5 @@ obstacle_set = ExtResource("set")
 [resource]
 script = ExtResource("3")
 id = &"greybox_island"
+length_m = 2500
 segments = Array[ExtResource("2")]([SubResource("segment")])

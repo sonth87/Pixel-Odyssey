@@ -209,6 +209,11 @@ Mẫu:
 - Vì sao không chỉ hạ trọng số các chunk thưa: hai chunk khác nhau vẫn ghép được cạnh nhau dù trọng số thấp; chỉ sửa **vị trí nội dung trong từng chunk** mới chặn được tận gốc.
 - Hệ quả: 7 chunk greybox được sửa lại cách đặt chướng ngại vật (`crate_one`, `pillar_one`, `guard_one`, `log_one`, `gap_24`, `gap_40`, `step_up_down`, `charger_one`). Thêm quy tắc vào [difficulty & pacing](../01-game-design/06-difficulty-and-pacing.md#5-cảm-giác-suýt-chết-nhưng-công-bằng--checklist-cho-người-thiết-kế-chunk) và test chống hồi quy `test_chunk_pacing.gd` (đo khoảng trống lớn nhất trên 150 seed, ngưỡng 450 px). Đo lại sau khi sửa: khoảng trống lớn nhất trên 299 seed là 406 px, chỉ xảy ra một lần ở đầu run (đúng như chủ đích "0–3s đường trống" trong tài liệu nhịp chơi).
 
+## D-035 — Kéo dài quãng đường tăng tốc của đảo greybox: 1500 m → 2500 m
+- Ngày: 2026-10-03 · Trạng thái: `ĐỀ XUẤT` — theo phản hồi chơi thử ("tốc độ tăng lên có vẻ hơi nhanh"), chờ xác nhận thêm sau khi chơi lại.
+- Quyết định: `greybox_island.tres` khai báo rõ `length_m = 2500` (trước đó dùng ngầm giá trị mặc định 1500 m của `IslandData`). Tốc độ đầu/cuối (140 → 260 px/s) giữ nguyên, chỉ kéo dài quãng đường để đạt tốc độ tối đa.
+- Vì sao chỉ đổi `length_m` mà không đổi `speed_end`: phản hồi là về **nhịp tăng**, không phải về tốc độ tối đa có gắt hay không; đổi độ dài giữ nguyên "đích" nhưng kéo dài đường tới đó.
+
 ---
 
 ## Câu hỏi `MỞ`
