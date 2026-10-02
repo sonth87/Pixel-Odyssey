@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ObstacleData" format=3]
+
+[ext_resource type="Script" path="res://runner/schema/charger_behavior.gd" id="2"]
+[ext_resource type="Script" path="res://runner/schema/obstacle_data.gd" id="1"]
+
+[sub_resource type="Resource" id="behavior"]
+script = ExtResource("2")
+trigger_distance_px = 200
+telegraph_time = 0.25
+move_speed = 60.0
+
+[resource]
+script = ExtResource("1")
+id = &"greybox_charger"
+category = &"enemy_moving"
+hitbox = Rect2i(-5, -16, 10, 16)
+behavior = SubResource("behavior")
+stompable = true

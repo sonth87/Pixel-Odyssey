@@ -182,6 +182,13 @@ Mẫu:
 - Vì sao renderer Compatibility: game 2D pixel art không cần tính năng của Forward+/Mobile; Compatibility chạy trên nhiều máy Android cũ nhất và chạy được trên Web nếu sau này cần (Q-05).
 - Hệ quả: nâng phiên bản Godot/gdUnit4 phải ghi mục mới và chạy lại toàn bộ test.
 
+## D-031 — Chunk viết bằng sơ đồ ký tự, không dùng scene + TileMap
+- Ngày: 2026-10-02 · Trạng thái: `ĐỀ XUẤT`
+- Bối cảnh: tài liệu ban đầu định chunk là scene `.tscn` có `TileMapLayer` và các Marker. Dữ liệu TileMap trong `.tscn` là mã nhị phân, không đọc/sửa được bằng chữ, khó review và khó cho AI tạo.
+- Quyết định: chunk là Resource `ChunkDefinition` với `layout` là các dòng ký tự, mỗi ký tự là cột rộng 8 px: `#` đất, `.` trống, `l` vật thấp, `t` vật cao, `w` vật rộng, `e` kẻ địch đứng, `c` kẻ địch lao tới. Hàng dưới cùng là mặt đất chuẩn (y = 148); cột không có `#` là hố. Hình đất (tile) được vẽ từ sơ đồ lúc dựng cảnh.
+- Vì sao: nhìn file là thấy ngay đường chạy; sửa bằng bất kỳ trình soạn thảo nào; diff rõ trong git; validator và game đọc cùng một dữ liệu. Cách làm phổ biến (Spelunky dùng cách tương tự).
+- Hệ quả: [data schemas — Chunk](../05-technical/04-data-schemas.md), skill `add-island` mục chunk. Ký hiệu cho vật bay, vật rơi, mối nguy, điểm đặt item, hàng xu sẽ thêm khi làm các hành vi đó (M2–M3).
+
 ---
 
 ## Câu hỏi `MỞ`

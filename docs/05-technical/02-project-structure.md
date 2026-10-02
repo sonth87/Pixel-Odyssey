@@ -90,7 +90,6 @@ game/
 │       ├── power_up_data.gd
 │       ├── weighted_entry.gd
 │       ├── obstacle_data.gd, obstacle_set.gd
-│       ├── chunk_pool.gd
 │       ├── segment_data.gd, island_data.gd, journey_data.gd
 │       ├── parallax_set_data.gd, parallax_layer_data.gd
 │       ├── event_data.gd

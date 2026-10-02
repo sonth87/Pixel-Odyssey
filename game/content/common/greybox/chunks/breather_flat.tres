@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ChunkDefinition" format=3]
+
+[ext_resource type="Script" path="res://runner/schema/chunk_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"breather_flat"
+difficulty = 1
+tags = Array[StringName]([&"breather"])
+layout = PackedStringArray("........................................", "........................................", "........................................", "########################################")

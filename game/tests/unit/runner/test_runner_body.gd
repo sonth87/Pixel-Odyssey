@@ -4,18 +4,17 @@ const SPEED := 683
 const PIT_START_PX := 100
 
 var _physics: JumpPhysics
+var _flat: Terrain
+var _ledge: Terrain
 
 
 func before_test() -> void:
 	_physics = RunnerPhysicsConfig.new().compile()
-
-
-func _flat(_x: int) -> int:
-	return 0
-
-
-func _ledge(x: int) -> int:
-	return 0 if x < Fixed.from_px(PIT_START_PX) else RunnerBody.NO_GROUND
+	_flat = Terrain.new()
+	_flat.append_span(-1000, 0)
+	_ledge = Terrain.new()
+	_ledge.append_span(-1000, 0)
+	_ledge.append_span(PIT_START_PX, Terrain.NO_GROUND)
 
 
 ## Jumps from flat ground holding for `hold_ticks`; returns [apex in subpixels, ticks in the air].
@@ -88,4 +87,4 @@ func test_falling_into_a_pit_kills() -> void:
 	body.death_y = Fixed.from_px(48)
 	for i in 120:
 		body.step(TickInput.of(false, false), SPEED)
-	assert_bool(body.dead).is_true()
+	assert_int(body.death).is_equal(RunnerBody.Death.PIT)

@@ -68,17 +68,17 @@ Có thể làm song song: M0-01/04/05/06/07/08/14 (Claude) cùng lúc với M0-0
 |---|---|---|---|---|
 | [x] M1-01 | Thư viện số nguyên cố định (`shared/core/math/`) + `RunnerPhysicsConfig` | Claude | M0-14 | Test: bảng nhảy trong [physics §2](../05-technical/05-physics-collision-generation.md#2-nhảy) khớp ±1 px |
 | [x] M1-02 | `RngStreams` (4 luồng từ 1 seed) | Claude | — | Test tất định: cùng seed → cùng chuỗi |
-| [~] M1-03 | Xử lý input: chạm xuống = nhảy, giữ, jump buffer, coyote; ghi/phát lại input | Claude | M1-01 | Test buffer/coyote; phát lại run cho cùng kết quả |
+| [x] M1-03 | Xử lý input: chạm xuống = nhảy, giữ, jump buffer, coyote; ghi/phát lại input | Claude | M1-01 | Test buffer/coyote; phát lại run cho cùng kết quả |
 | [~] M1-04 | `RunnerBody`, `JumpController`, state machine (Running/Airborne/Dead) | Claude | M1-01, M1-03 | Nhảy chạm/giữ đúng độ cao |
-| [ ] M1-05 | Địa hình: mặt đất, hố, bậc, tự bước lên, corner correction, `WALL`, `PIT` | Claude | M1-04 | Test corner correction 6/7 px |
-| [ ] M1-06 | `Obstacle` + `StaticBehavior` + `ChargerBehavior` + hitbox/hurtbox | Claude | M1-04 | Kẻ địch lao tới kích hoạt theo vị trí |
-| [ ] M1-07 | `CollisionResolver`: thường, khiên (qua debug), i-frames, đạp | Claude | M1-05, M1-06 | Test các ô tương ứng của ma trận |
-| [ ] M1-08 | Định dạng chunk (`ChunkDefinition`, slot) + 12–15 chunk greybox | Claude | M1-05, M1-06 | Chunk mở được trong editor |
-| [ ] M1-09 | `ObjectPool`, `ChunkSpawner`, `StageDirector` (1 đảo greybox, tốc độ đầu → cuối) | Claude | M1-08, M1-02 | Chạy liên tục 10 phút không lỗi |
-| [ ] M1-10 | Validator (vật tĩnh + kẻ địch lao tới, cửa sổ thời điểm, luật thời gian phản ứng) + chạy headless | Claude | M1-08 | Mọi chunk xanh; chunk mẫu sai bị báo lỗi |
-| [ ] M1-11 | `RunController`/`RunContext`; chết → Game Over → chơi lại ≤ 1 s | Claude | M1-09 | Đo thời gian chơi lại |
-| [ ] M1-12 | HUD quãng đường; camera theo độ cao mặt đất | Claude | M1-09 | |
-| [ ] M1-13 | Chế độ debug F1–F9 + log vị trí chết | Claude | M1-11 | |
+| [x] M1-05 | Địa hình: mặt đất, hố, bậc, tự bước lên, corner correction, `WALL`, `PIT` | Claude | M1-04 | Test corner correction 6/7 px |
+| [x] M1-06 | `Obstacle` + `StaticBehavior` + `ChargerBehavior` + hitbox/hurtbox | Claude | M1-04 | Kẻ địch lao tới kích hoạt theo vị trí |
+| [~] M1-07 | `CollisionResolver`: thường, khiên (qua debug), i-frames, đạp | Claude | M1-05, M1-06 | Test các ô tương ứng của ma trận |
+| [x] M1-08 | Định dạng chunk (`ChunkDefinition`, slot) + 12–15 chunk greybox | Claude | M1-05, M1-06 | Chunk mở được trong editor |
+| [~] M1-09 | `ObjectPool`, `ChunkSpawner`, `StageDirector` (1 đảo greybox, tốc độ đầu → cuối) | Claude | M1-08, M1-02 | Chạy liên tục 10 phút không lỗi |
+| [~] M1-10 | Validator (vật tĩnh + kẻ địch lao tới, cửa sổ thời điểm, luật thời gian phản ứng) + chạy headless | Claude | M1-08 | Mọi chunk xanh; chunk mẫu sai bị báo lỗi |
+| [x] M1-11 | `RunController`/`RunContext`; chết → Game Over → chơi lại ≤ 1 s | Claude | M1-09 | Đo thời gian chơi lại |
+| [~] M1-12 | HUD quãng đường; camera theo độ cao mặt đất | Claude | M1-09 | |
+| [~] M1-13 | Chế độ debug F1–F9 + log vị trí chết | Claude | M1-11 | |
 | [ ] M1-14 | `check_layers.py`, `check_ip_names.py` | Claude | M0-04 | Chạy được, đang pass |
 | [ ] M1-15 | 3 SFX tạm (nhảy, đáp, chết) bằng jsfxr | Cả hai | — | |
 | [ ] M1-16 | Xuất bản PC/Android để playtest | Claude | M1-11 | Cài được lên máy bạn |

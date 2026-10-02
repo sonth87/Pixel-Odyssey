@@ -165,30 +165,30 @@ Chunk đặt **loại** → `ObstacleFactory` tra `ObstacleSet` của đoạn (l
 
 `DecorationSetData` của đoạn chứa danh sách `NpcData` có trọng số + mật độ; NPC `SET_PIECE` được đặt bằng `EventTrigger` tại % của đoạn.
 
-### Chunk (scene `.tscn`, script gốc `ChunkDefinition`)
-| Trường (export trên node gốc) | Kiểu | Ý nghĩa |
+### ChunkDefinition — chunk (D-031)
+| Trường | Kiểu | Ý nghĩa |
 |---|---|---|
 | `id` | StringName | |
 | `difficulty` | int 1–5 | |
-| `speed_min`, `speed_max` | float | Khoảng tốc độ được dùng (validator kiểm tra cả khoảng) |
-| `tags` | Array[StringName] | `intro`, `breather`, `air_heavy`, `city`... |
-| `entry_height`, `exit_height` | int | Độ cao mặt đất đầu/cuối (bội số 8 px) |
+| `weight` | int | Trọng số khi chọn ngẫu nhiên trong pool |
+| `speed_min`, `speed_max` | float | Khoảng tốc độ gốc (px/s) được dùng; validator kiểm tra min, giữa, max |
+| `tags` | Array[StringName] | `intro`, `breather`, ... |
+| `layout` | PackedStringArray | Sơ đồ ký tự, mỗi ký tự = cột 8 px, hàng dưới cùng = mặt đất chuẩn y = 148 |
 
-Node con:
-| Node | Ý nghĩa |
-|---|---|
-| `Terrain` (TileMapLayer) | Mặt đất, hố, bậc |
-| `ObstacleSlot` (Marker2D + script) | `category` hoặc `obstacle_id` cụ thể |
-| `ItemSlot` (Marker2D + script) | `risk: SAFE/RISKY`, `allowed: Array[category]` |
-| `CoinLine` (Path2D + script) | Hàng xu dọc theo đường |
-| `NoForegroundZone` (tuỳ chọn) | Vùng cấm tiền cảnh cao |
+Ký hiệu `layout`: `#` đất · `.` trống · `l` ground_low · `t` ground_tall · `w` ground_wide · `e` enemy_static · `c` enemy_moving. Cột không có `#` là hố; vật đứng trên mặt đất của cột chứa nó. Độ cao đầu/cuối chunk lấy từ cột đầu/cuối (`ChunkLayout.entry_y()` / `exit_y()`); 6 cột (48 px) mỗi đầu là vùng đệm phẳng, không có vật.
 
-Độ dài chunk tính từ `Terrain`.
+Ví dụ (`content/common/greybox/chunks/gap_then_crate.tres`):
+```
+........................................
+........................................
+...........................l............
+#############....#######################
+```
 
-### ChunkPool
-| Trường | Kiểu |
-|---|---|
-| `entries` | Array[WeightedEntry] (resource = PackedScene chunk) |
+Code đọc sơ đồ: `ChunkLayout` (runner/world/chunk). Ký hiệu cho vật bay, vật rơi, mối nguy, điểm đặt item, hàng xu sẽ thêm cùng các hành vi tương ứng.
+
+### Pool chunk
+`SegmentData.chunk_pool: Array[ChunkDefinition]`; trọng số nằm ở `ChunkDefinition.weight`.
 
 ### SegmentData
 | Trường | Kiểu | Ý nghĩa |
@@ -199,7 +199,7 @@ Node con:
 | `parallax` | ParallaxSetData | |
 | `ground_tileset` | TileSet | |
 | `obstacle_set` | ObstacleSet | |
-| `chunk_pool` | ChunkPool | |
+| `chunk_pool` | Array[ChunkDefinition] | |
 | `item_slot_chance` | float | Xác suất một điểm đặt có item |
 | `decoration` | DecorationSetData | Mảnh nền + NPC + mật độ |
 | `events` | Array[EventTrigger] | `at_percent` + `EventData` |

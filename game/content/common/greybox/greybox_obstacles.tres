@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ObstacleSet" format=3]
+
+[ext_resource type="Script" path="res://runner/schema/obstacle_data.gd" id="1"]
+[ext_resource type="Script" path="res://runner/schema/obstacle_set.gd" id="2"]
+[ext_resource type="Resource" path="res://content/common/greybox/obstacles/greybox_crate.tres" id="o0"]
+[ext_resource type="Resource" path="res://content/common/greybox/obstacles/greybox_pillar.tres" id="o1"]
+[ext_resource type="Resource" path="res://content/common/greybox/obstacles/greybox_log.tres" id="o2"]
+[ext_resource type="Resource" path="res://content/common/greybox/obstacles/greybox_guard.tres" id="o3"]
+[ext_resource type="Resource" path="res://content/common/greybox/obstacles/greybox_charger.tres" id="o4"]
+
+[resource]
+script = ExtResource("2")
+obstacles = Array[ExtResource("1")]([ExtResource("o0"), ExtResource("o1"), ExtResource("o2"), ExtResource("o3"), ExtResource("o4")])

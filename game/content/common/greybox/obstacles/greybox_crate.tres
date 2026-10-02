@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ObstacleData" format=3]
+
+[ext_resource type="Script" path="res://runner/schema/obstacle_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"greybox_crate"
+category = &"ground_low"
+hitbox = Rect2i(-6, -12, 12, 12)

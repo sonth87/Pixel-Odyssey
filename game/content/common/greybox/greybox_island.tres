@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="IslandData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://runner/schema/chunk_definition.gd" id="1"]
+[ext_resource type="Script" path="res://runner/schema/segment_data.gd" id="2"]
+[ext_resource type="Script" path="res://runner/schema/island_data.gd" id="3"]
+[ext_resource type="Resource" path="res://content/common/greybox/greybox_obstacles.tres" id="set"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/flat_intro.tres" id="c0"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/crate_one.tres" id="c1"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/gap_24.tres" id="c2"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/crate_pair.tres" id="c3"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/pillar_one.tres" id="c4"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/gap_40.tres" id="c5"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/step_up_down.tres" id="c6"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/guard_one.tres" id="c7"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/log_one.tres" id="c8"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/gap_then_crate.tres" id="c9"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/charger_one.tres" id="c10"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/pillar_gap.tres" id="c11"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/crate_triple.tres" id="c12"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/platform_gap.tres" id="c13"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/breather_flat.tres" id="c14"]
+[ext_resource type="Resource" path="res://content/common/greybox/chunks/guard_charger.tres" id="c15"]
+
+[sub_resource type="Resource" id="segment"]
+script = ExtResource("2")
+id = &"greybox_all"
+chunk_pool = Array[ExtResource("1")]([ExtResource("c0"), ExtResource("c1"), ExtResource("c2"), ExtResource("c3"), ExtResource("c4"), ExtResource("c5"), ExtResource("c6"), ExtResource("c7"), ExtResource("c8"), ExtResource("c9"), ExtResource("c10"), ExtResource("c11"), ExtResource("c12"), ExtResource("c13"), ExtResource("c14"), ExtResource("c15")])
+obstacle_set = ExtResource("set")
+
+[resource]
+script = ExtResource("3")
+id = &"greybox_island"
+segments = Array[ExtResource("2")]([SubResource("segment")])
