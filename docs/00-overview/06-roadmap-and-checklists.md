@@ -41,18 +41,18 @@ M0 ──► [Tài liệu input/hiển thị/tất định] ──► M1 ──�
 | ID | Việc | Ai | Phụ thuộc | Xong khi |
 |---|---|---|---|---|
 | [x] M0-01 | Khởi tạo git, Git LFS, `.gitignore`, `.gitattributes`, commit đầu (tài liệu hiện có) | Claude | — | `git log` có commit; ảnh đi qua LFS |
-| [ ] M0-02 | Cài Godot 4 bản stable mới nhất; báo số phiên bản | Bạn | — | Mở được Godot |
-| [ ] M0-03 | Ghi phiên bản Godot vào decision log | Claude | M0-02 | Có mục D-xxx |
-| [ ] M0-04 | Tạo project Godot trong `game/`, cây thư mục theo [project structure](../05-technical/02-project-structure.md), cấu hình hiển thị pixel-perfect theo [tooling §3](../05-technical/06-tooling-and-workflow.md#3-cấu-hình-project-godot-m0) | Claude | M0-02 | Scene trống chạy ở 320×180, phóng to sắc nét |
-| [ ] M0-05 | Cài plugin test gdUnit4, 1 test mẫu chạy được bằng dòng lệnh | Claude | M0-04 | Lệnh test headless pass |
+| [x] M0-02 | Cài Godot 4 bản stable mới nhất; báo số phiên bản | Bạn | — | Mở được Godot |
+| [x] M0-03 | Ghi phiên bản Godot vào decision log | Claude | M0-02 | Có mục D-xxx |
+| [x] M0-04 | Tạo project Godot trong `game/`, cây thư mục theo [project structure](../05-technical/02-project-structure.md), cấu hình hiển thị pixel-perfect theo [tooling §3](../05-technical/06-tooling-and-workflow.md#3-cấu-hình-project-godot-m0) | Claude | M0-02 | Scene trống chạy ở 320×180, phóng to sắc nét |
+| [x] M0-05 | Cài plugin test gdUnit4, 1 test mẫu chạy được bằng dòng lệnh | Claude | M0-04 | Lệnh test headless pass |
 | [x] M0-06 | Ảnh tham khảo chuyển sang `assets/` (bạn đã làm); cập nhật đường dẫn trong tài liệu | Cả hai | — | Không còn link tới đường dẫn cũ |
 | [x] M0-07 | `tools/extract_palette.py` → `art-source/palettes/master.gpl` + bảng con cho 8 nhân vật | Claude | M0-06 | File .gpl mở được trong Aseprite |
 | [x] M0-08 | `tools/pixelize.py` theo [pipeline §5](../02-art/05-ai-image-pipeline.md) + chạy thử trên **toàn bộ** ảnh tham khảo | Claude | M0-07 | Ảnh tham khảo → 64×64 đúng lưới, báo cáo lưới dò được |
-| [ ] M0-09 | Cài Pixelorama (miễn phí) | Bạn | — | Mở được, nhập được bảng màu `.gpl` |
+| [x] M0-09 | Cài Pixelorama (miễn phí) | Bạn | — | Mở được, nhập được bảng màu `.gpl` |
 | [x] M0-10 | Gen ảnh Luffy `idle` bằng Gemini theo prompt soạn sẵn; lưu raw + `.prompt.md` | Cả hai | — | Có ảnh raw được chọn |
 | [~] M0-11 | Chạy `pixelize.py` trên ảnh vừa gen; sửa tay trong Pixelorama; tạo `art-source/pixelorama/characters/luffy.pxo` với tag `idle` | Cả hai | M0-08, M0-09, M0-10 | Qua checklist sprite (mục 9.2) |
-| [~] M0-12 | Định dạng dải PNG mỗi animation (D-029) + `tools/check_sprites.py`; xuất `idle.png` vào `game/content/onepiece/characters/luffy/sprites/base/` | Cả hai | M0-11 | `check_sprites.py` pass |
-| [ ] M0-13 | Scene thử hiển thị Luffy `idle` đúng pivot, pixel-perfect | Claude | M0-04, M0-12 | Chụp màn hình 4×: pixel vuông, chân đúng mặt đất |
+| [x] M0-12 | Định dạng dải PNG mỗi animation (D-029) + `tools/check_sprites.py`; xuất `idle.png` vào `game/content/onepiece/characters/luffy/sprites/base/` | Cả hai | M0-11 | `check_sprites.py` pass |
+| [x] M0-13 | Scene thử hiển thị Luffy `idle` đúng pivot, pixel-perfect | Claude | M0-04, M0-12 | Chụp màn hình 4×: pixel vuông, chân đúng mặt đất |
 | [~] M0-14 | Viết tài liệu **input / hiển thị / tất định** (`05-technical/08-input-rendering-determinism.md`): đơn vị số nguyên, nhận chạm theo tick, nội suy hình, cuộn pixel, tỉ lệ màn hình | Claude | — | Bạn duyệt; các thông số physics quy đổi sang nguyên |
 | [ ] M0-15 | Đóng M0: cập nhật tài liệu theo thực tế (thời gian làm 1 frame, lỗi của pixelize), chia việc chi tiết M2 | Claude | tất cả | Checklist mục 10 |
 

@@ -13,6 +13,7 @@ g1/
 ├── tools/                        script ngoài engine (Python, shell)
 │   ├── pixelize.py
 │   ├── check_sprites.py          kiểm tra dải PNG animation
+│   ├── run_tests.sh              chạy test gdUnit4 headless
 │   ├── extract_palette.py
 │   ├── check_layers.py           kiểm tra luật phụ thuộc giữa các lớp
 │   └── check_ip_names.py         kiểm tra không có tên IP trong shared/ và runner/
@@ -35,6 +36,7 @@ game/
 ├── addons/                       plugin bên thứ ba (gdUnit4)
 ├── shared/                       ── dùng chung với game 2 ──
 │   ├── core/
+│   │   ├── sprites/              sprite_strip_loader.gd (dải PNG → SpriteFrames)
 │   │   ├── event_bus.gd
 │   │   ├── state_machine/        state_machine.gd, state.gd
 │   │   ├── rng/                  rng_streams.gd
@@ -95,6 +97,7 @@ game/
 │       └── content_pack.gd
 ├── app/                          ── vỏ ứng dụng ──
 │   ├── boot/                     boot.tscn
+│   ├── dev/                      sprite_preview.tscn (scene xem thử sprite, chỉ dùng khi phát triển)
 │   ├── content_registry.gd
 │   ├── screens/                  main_menu/, character_select/, run_screen/, results/, settings/, pause/
 │   └── router.gd                 chuyển màn hình

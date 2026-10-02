@@ -4,7 +4,7 @@
 
 | Phần mềm | Phiên bản | Dùng để |
 |---|---|---|
-| Godot | 4.x stable (khoá phiên bản cụ thể ở M0, ghi decision log) | Engine; cần ≥ 4.3 để có `Parallax2D`, `TileMapLayer` |
+| Godot | **4.7.2 stable** (D-030) | Engine; cần ≥ 4.3 để có `Parallax2D`, `TileMapLayer` |
 | Git + Git LFS | mới nhất | Quản lý phiên bản, file nhị phân |
 | Python 3 + `pillow`, `numpy` | ≥ 3.10 | Script trong `tools/` |
 | Pixelorama | mới nhất | Vẽ, animation, xuất dải PNG (D-029) |
@@ -12,7 +12,7 @@
 | (Android) Android SDK + JDK theo hướng dẫn export của Godot | | Từ M3 để test máy thật |
 
 Plugin Godot (trong `game/addons/`, ghi phiên bản vào decision log khi thêm):
-- **gdUnit4** — test.
+- **gdUnit4 6.2.1** — test (D-030). Thư mục test riêng của plugin đã bỏ khỏi bản copy.
 
 ## 2. Thiết lập repo (M0)
 
@@ -33,6 +33,7 @@ git lfs install
 ```
 game/.godot/
 game/export/
+game/reports/
 *.import.tmp
 __pycache__/
 .DS_Store
@@ -75,9 +76,9 @@ Lưới UI 640×360 (D-017): UI nằm trong `CanvasLayer` riêng render qua `Sub
 Godot headless:
 ```bash
 godot --headless --path game -s res://runner/validation/validate_all.gd     # validator chunk
-godot --headless --path game -s res://addons/gdUnit4/bin/GdUnitCmdTool.gd -a res://tests   # test
+tools/run_tests.sh                                                         # test (gdUnit4)
 ```
-(Lệnh gdUnit4 kiểm tra lại theo phiên bản plugin khi cài.)
+`run_tests.sh` import lại project rồi chạy gdUnit4 với `--ignoreHeadlessMode` (test của dự án không dùng input giao diện). Đường dẫn Godot mặc định `/Applications/Godot.app`, đổi bằng biến `GODOT_BIN`.
 
 ## 5. Chế độ debug (NFR-QA-01)
 

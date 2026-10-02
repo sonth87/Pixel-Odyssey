@@ -18,3 +18,6 @@ Thumbs.db
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# Test reports
+game/reports/

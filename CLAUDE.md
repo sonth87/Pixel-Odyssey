@@ -30,7 +30,7 @@ Pixel Odyssey — pixel-art one-button endless runner (Godot 4, GDScript). First
 - Comments: only non-obvious "why", describing the code as it is now. Never write change history or references to requests/people/tasks ("changed from X", "per user request", "reverted to", "added for M2").
 - Validate at boundaries (content loading, save files); use `assert` for internal invariants; no handling for impossible cases.
 - Tests (gdUnit4) required for: jump physics, RNG determinism, chunk validator, effect stacking, scoring, save migrations, localization keys, required animation sets.
-- After changing physics constants or chunks: run the chunk validator.
+- Run tests with `tools/run_tests.sh` (Godot 4.7.2 at /Applications/Godot.app, gdUnit4 6.2.1). After changing physics constants or chunks: run the chunk validator.
 - No user-facing strings in code: use localization keys (`docs/04-localization/01-localization.md`).
 - Full rules: `docs/05-technical/03-coding-standards.md`.
 

@@ -1,0 +1,55 @@
+; Engine configuration file.
+; Settings follow docs/05-technical/06-tooling-and-workflow.md and 08-input-rendering-determinism.md.
+
+config_version=5
+
+[application]
+
+config/name="Pixel Odyssey"
+run/main_scene="res://app/dev/sprite_preview.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+run/max_fps=60
+
+[debug]
+
+gdscript/warnings/untyped_declaration=2
+
+[display]
+
+window/size/viewport_width=320
+window/size/viewport_height=180
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+window/stretch/scale_mode="integer"
+window/handheld/orientation=0
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")
+
+[importer_defaults]
+
+texture={
+"compress/mode": 0,
+"mipmaps/generate": false
+}
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=false
+pointing/emulate_mouse_from_touch=false
+
+[physics]
+
+common/physics_ticks_per_second=60
+common/max_physics_steps_per_frame=8
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/canvas_textures/default_texture_filter=0
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true
