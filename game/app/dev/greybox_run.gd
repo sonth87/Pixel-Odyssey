@@ -6,6 +6,8 @@ const ISLAND := "res://content/common/greybox/greybox_island.tres"
 const PLAYER_SCREEN_X := 64
 const RESTART_DELAY_TICKS := 24
 const TIME_SCALES: Array[float] = [1.0, 0.5, 0.25]
+## Camera follows ground height (not jump arcs), smoothed over this long (physics doc §9).
+const CAMERA_SMOOTH_SECONDS := 0.25
 const SKY := Color(0.988, 0.961, 0.918)
 const GROUND := Color(0.894, 0.863, 0.82)
 const GROUND_EDGE := Color(0.78, 0.74, 0.69)
@@ -28,6 +30,8 @@ var _dead_ticks := 0
 var _overlay := true
 var _time_scale_index := 0
 var _jump_meter := JumpMeter.new()
+var _camera_y_px: float = ChunkLayout.GROUND_Y_PX
+var _camera_target_y_px: float = ChunkLayout.GROUND_Y_PX
 
 @onready var _input: InputCollector = %InputCollector
 @onready var _hud: Label = %Hud
@@ -65,23 +69,33 @@ func _physics_process(_delta: float) -> void:
 	_jump_meter.observe(_run.body, input, was_grounded, _physics)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	_update_camera(delta)
 	_hud.visible = _overlay
 	_hud.text = _hud_text()
 	queue_redraw()
 
 
+## Follows ground height, not jump arcs, smoothed so steps don't snap the view (physics doc §9).
+func _update_camera(delta: float) -> void:
+	var ground_here := _run.terrain.ground_at(Fixed.to_px(_run.body.x))
+	if ground_here != Terrain.NO_GROUND:
+		_camera_target_y_px = ground_here
+	_camera_y_px = lerpf(_camera_y_px, _camera_target_y_px, clampf(delta / CAMERA_SMOOTH_SECONDS, 0.0, 1.0))
+
+
 func _draw() -> void:
 	var width := get_viewport_rect().size.x
 	var camera := Fixed.to_px(_run.body.x) - PLAYER_SCREEN_X
+	var vertical := roundf(ChunkLayout.GROUND_Y_PX - _camera_y_px)
 	draw_rect(Rect2(0, 0, width, 180), SKY)
-	_draw_terrain(camera, width)
+	_draw_terrain(camera, vertical, width)
 	for obstacle in _run.obstacles:
-		_draw_obstacle(obstacle, camera)
-	_draw_box(_run.body.hurtbox(), camera, PLAYER_DEAD if _run.body.is_dead() else PLAYER)
+		_draw_obstacle(obstacle, camera, vertical)
+	_draw_box(_run.body.hurtbox(), camera, vertical, PLAYER_DEAD if _run.body.is_dead() else PLAYER)
 
 
-func _draw_terrain(camera: int, width: float) -> void:
+func _draw_terrain(camera: int, vertical: float, width: float) -> void:
 	var terrain := _run.terrain
 	for i in terrain.span_count():
 		var ground_y := terrain.span_y(i)
@@ -89,28 +103,29 @@ func _draw_terrain(camera: int, width: float) -> void:
 			continue
 		var start := terrain.span_start(i) - camera
 		var end := (terrain.span_start(i + 1) - camera) if i + 1 < terrain.span_count() else int(width)
-		draw_rect(Rect2(start, ground_y, end - start, 180 - ground_y), GROUND)
-		draw_rect(Rect2(start, ground_y, end - start, 1), GROUND_EDGE)
+		var y := ground_y + vertical
+		draw_rect(Rect2(start, y, end - start, 180 - y), GROUND)
+		draw_rect(Rect2(start, y, end - start, 1), GROUND_EDGE)
 
 
-func _draw_box(box: Rect2i, camera: int, color: Color) -> void:
+func _draw_box(box: Rect2i, camera: int, vertical: float, color: Color) -> void:
 	var x := Fixed.to_px(box.position.x) - camera
-	var y := Fixed.to_px(box.position.y)
+	var y := Fixed.to_px(box.position.y) + vertical
 	draw_rect(Rect2(x, y, Fixed.to_px(box.size.x), Fixed.to_px(box.size.y)), color)
 
 
 ## Solid-top obstacles look like crates; deadly ones get spikes on top so the difference reads at a glance.
-func _draw_obstacle(obstacle: ObstacleState, camera: int) -> void:
+func _draw_obstacle(obstacle: ObstacleState, camera: int, vertical: float) -> void:
 	var box := obstacle.hitbox()
 	if obstacle.data.solid_top:
-		_draw_box(box, camera, CRATE_EDGE)
-		_draw_box(box.grow(-Fixed.SUB), camera, CRATE)
+		_draw_box(box, camera, vertical, CRATE_EDGE)
+		_draw_box(box.grow(-Fixed.SUB), camera, vertical, CRATE)
 		return
-	_draw_box(box, camera, _obstacle_color(obstacle))
+	_draw_box(box, camera, vertical, _obstacle_color(obstacle))
 	if obstacle.defeated or obstacle.data.category.begins_with("enemy"):
 		return
 	var left := Fixed.to_px(box.position.x) - camera
-	var top := Fixed.to_px(box.position.y)
+	var top := Fixed.to_px(box.position.y) + vertical
 	for x in range(left, left + Fixed.to_px(box.size.x) - 1, 3):
 		draw_colored_polygon(PackedVector2Array([Vector2(x, top), Vector2(x + 3, top), Vector2(x + 1.5, top - 3)]), SPIKES)
 

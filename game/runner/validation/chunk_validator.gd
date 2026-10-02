@@ -8,6 +8,10 @@ const MAX_APPROACH_SPEED := 365.0
 const HOLD_OPTIONS: Array[int] = [0, 4, 8, 13]
 const RUNWAY_PX := 160
 const MAX_AIR_TICKS := 240
+## §7.2: a press window ≥ 4 ticks (~67 ms) is required, 2–3 only warns, ≤ 1 fails. Checked up to 6 ticks.
+const MAX_TIMING_WINDOW := 6
+const MIN_TIMING_WINDOW := 4
+const WARN_TIMING_WINDOW := 2
 
 
 static func validate(chunk: ChunkDefinition, obstacle_set: ObstacleSet, physics: JumpPhysics) -> Array[String]:
@@ -20,11 +24,28 @@ static func validate(chunk: ChunkDefinition, obstacle_set: ObstacleSet, physics:
 	_check_obstacles(chunk, layout, obstacle_set, errors)
 	if not errors.is_empty():
 		return errors
-	for picks in _variant_combinations(layout, obstacle_set):
+	var combos := _variant_combinations(layout, obstacle_set)
+	for picks in combos:
 		for speed: float in [chunk.speed_min, (chunk.speed_min + chunk.speed_max) / 2.0, chunk.speed_max]:
 			if not ChunkPathSearch.new(layout, picks, physics, Fixed.velocity(speed)).passable():
 				errors.append("%s: not passable at %d px/s with %s" % [chunk.id, int(speed), _describe(picks)])
+	if errors.is_empty():
+		_check_timing(chunk, layout, combos[0], physics, errors)
 	return errors
+
+
+## §7.2, checked at speed_max with the first variant combination only (geometry rarely changes the
+## timing of a jump, so this keeps validation cost down).
+static func _check_timing(chunk: ChunkDefinition, layout: ChunkLayout, picks: Dictionary, physics: JumpPhysics,
+		errors: Array[String]) -> void:
+	var search := ChunkPathSearch.new(layout, picks, physics, Fixed.velocity(chunk.speed_max))
+	for event: Dictionary in search.find_path():
+		var window := search.timing_window(event)
+		if window < WARN_TIMING_WINDOW:
+			errors.append("%s: only %d tick(s) to press jump at speed_max (need %d)" %
+				[chunk.id, window, MIN_TIMING_WINDOW])
+		elif window < MIN_TIMING_WINDOW:
+			print("WARN %s: only %d tick(s) to press jump at speed_max (want %d)" % [chunk.id, window, MIN_TIMING_WINDOW])
 
 
 static func _check_buffers(layout: ChunkLayout, errors: Array[String]) -> void:

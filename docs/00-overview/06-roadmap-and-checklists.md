@@ -75,11 +75,11 @@ Có thể làm song song: M0-01/04/05/06/07/08/14 (Claude) cùng lúc với M0-0
 | [~] M1-07 | `CollisionResolver`: thường, khiên (qua debug), i-frames, đạp | Claude | M1-05, M1-06 | Test các ô tương ứng của ma trận |
 | [x] M1-08 | Định dạng chunk (`ChunkDefinition`, slot) + 12–15 chunk greybox | Claude | M1-05, M1-06 | Chunk mở được trong editor |
 | [~] M1-09 | `ObjectPool`, `ChunkSpawner`, `StageDirector` (1 đảo greybox, tốc độ đầu → cuối) | Claude | M1-08, M1-02 | Chạy liên tục 10 phút không lỗi |
-| [~] M1-10 | Validator (vật tĩnh + kẻ địch lao tới, cửa sổ thời điểm, luật thời gian phản ứng) + chạy headless | Claude | M1-08 | Mọi chunk xanh; chunk mẫu sai bị báo lỗi |
+| [x] M1-10 | Validator (vật tĩnh + kẻ địch lao tới, cửa sổ thời điểm, luật thời gian phản ứng) + chạy headless | Claude | M1-08 | Mọi chunk xanh; chunk mẫu sai bị báo lỗi |
 | [x] M1-11 | `RunController`/`RunContext`; chết → Game Over → chơi lại ≤ 1 s | Claude | M1-09 | Đo thời gian chơi lại |
-| [~] M1-12 | HUD quãng đường; camera theo độ cao mặt đất | Claude | M1-09 | |
+| [x] M1-12 | HUD quãng đường; camera theo độ cao mặt đất | Claude | M1-09 | |
 | [~] M1-13 | Chế độ debug F1–F9 + log vị trí chết | Claude | M1-11 | |
-| [ ] M1-14 | `check_layers.py`, `check_ip_names.py` | Claude | M0-04 | Chạy được, đang pass |
+| [x] M1-14 | `check_layers.py`, `check_ip_names.py` | Claude | M0-04 | Chạy được, đang pass |
 | [ ] M1-15 | 3 SFX tạm (nhảy, đáp, chết) bằng jsfxr | Cả hai | — | |
 | [ ] M1-16 | Xuất bản PC/Android để playtest | Claude | M1-11 | Cài được lên máy bạn |
 | [ ] M1-17 | Playtest 3–5 người × 5 phút; ghi nhận xét + log chết | Bạn | M1-16 | Có bảng ghi chép |

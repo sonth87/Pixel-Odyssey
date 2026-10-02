@@ -10,6 +10,7 @@ var _terrain := Terrain.new()
 var _start: RunnerBody
 var _goal: int
 var _hitboxes: Array[Array] = []
+var _fail_memo: Dictionary[Vector2i, bool] = {}
 
 
 func _init(layout: ChunkLayout, picks: Dictionary, physics: JumpPhysics, speed: int) -> void:
@@ -47,6 +48,73 @@ func passable() -> bool:
 			_push(stack, _advance(body, tick, true, hold))
 		_push(stack, _advance(body, tick, false, 0))
 	return false
+
+
+## One successful sequence of jumps as [{body_before, tick_before, hold}, ...], or [] if none exists
+## (also returned when the chunk needs zero jumps — found() distinguishes the two).
+## Recursive so the path can be reconstructed (passable() only needs a yes/no and uses an explicit stack).
+func find_path() -> Array:
+	_fail_memo.clear()
+	var result := _search(_start, 0, [])
+	return result[1] if result[0] else []
+
+
+## How many ticks earlier than the jump recorded by find_path() the player could instead have pressed and
+## still cleared the same hazard, up to ChunkValidator.MAX_TIMING_WINDOW. ≥ 1 always (the recorded tick
+## itself works); this is the "how forgiving is this moment" half of §7.2 — the other half, how late you
+## can leave it, is always ~0 by construction, since find_path() prefers running as long as possible
+## before jumping, so the recorded tick already is the latest safe one.
+func timing_window(event: Dictionary) -> int:
+	var safe_states: Array = event.safe_states
+	var window := 0
+	for i in range(safe_states.size() - 1, -1, -1):
+		if window >= ChunkValidator.MAX_TIMING_WINDOW:
+			break
+		var body: RunnerBody = safe_states[i][0]
+		var tick: int = safe_states[i][1]
+		var result := _advance(body, tick, true, event.hold)
+		if result.is_empty() or not _reachable(result[0], result[1]):
+			break
+		window += 1
+	return window
+
+
+func _reachable(body: RunnerBody, tick: int) -> bool:
+	return body.x >= _goal or _search(body, tick, [])[0]
+
+
+## Walks forward without jumping for as long as that stays safe (recording each such state in `safe`),
+## then — once no-jump finally fails — tries jumping from the most recent safe state backward through
+## older ones, so find_path() naturally prefers the latest possible jump and timing_window() can measure
+## how much earlier than that still would have worked. Memoizes failure only (x is a pure function of
+## tick, so (tick, y) fully keys a state). Returns [found: bool, trail] — trail can be [] on success too
+## (zero jumps needed anywhere), which is why success/failure is a flag, not trail.is_empty().
+func _search(body: RunnerBody, tick: int, trail: Array) -> Array:
+	var safe: Array = []
+	while true:
+		if body.x >= _goal:
+			return [true, trail]
+		if _fail_memo.has(Vector2i(tick, body.y)):
+			return [false]
+		safe.append([body, tick])
+		var result := _advance(body, tick, false, 0)
+		if result.is_empty():
+			break
+		body = result[0]
+		tick = result[1]
+	for i in range(safe.size() - 1, -1, -1):
+		var b: RunnerBody = safe[i][0]
+		var t: int = safe[i][1]
+		for hold in ChunkValidator.HOLD_OPTIONS:
+			var result := _advance(b, t, true, hold)
+			if not result.is_empty():
+				var event := {"body_before": b, "tick_before": t, "hold": hold, "safe_states": safe.slice(0, i + 1)}
+				var found := _search(result[0], result[1], trail + [event])
+				if found[0]:
+					return found
+	for state: Array in safe:
+		_fail_memo[Vector2i(state[1], (state[0] as RunnerBody).y)] = true
+	return [false]
 
 
 func _push(stack: Array, state: Array) -> void:
