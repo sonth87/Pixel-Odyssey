@@ -6,6 +6,7 @@ const DEFAULT_FPS := 10.0
 const _PLAYBACK := {
 	&"idle": [6.0, true],
 	&"run": [12.0, true],
+	&"run_fast": [15.0, true],
 	&"jump_start": [15.0, false],
 	&"jump_rise": [10.0, true],
 	&"jump_apex": [10.0, false],

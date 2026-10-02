@@ -20,3 +20,8 @@ func test_skill_phases_play_once_with_phase_fps() -> void:
 func test_unknown_tag_falls_back_to_default() -> void:
 	assert_float(CanonicalAnimations.fps(&"something_new")).is_equal(CanonicalAnimations.DEFAULT_FPS)
 	assert_bool(CanonicalAnimations.loops(&"something_new")).is_false()
+
+
+func test_run_fast_loops_faster_than_run() -> void:
+	assert_float(CanonicalAnimations.fps(&"run_fast")).is_greater(CanonicalAnimations.fps(&"run"))
+	assert_bool(CanonicalAnimations.loops(&"run_fast")).is_true()

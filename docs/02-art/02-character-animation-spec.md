@@ -21,6 +21,7 @@ Mức ưu tiên:
 |---|---|---|---|---|---|---|
 | `idle` | Đứng thở, nhún nhẹ | B1 | 4 | 6 | ✔ | 64 |
 | `run` | Chạy | B1 | 6 | 12* | ✔ | 64 |
+| `run_fast` | Chạy nhanh: người đổ sâu hơn (đầu +3, ngực +2, hông +1 px), sải dài hơn, gối nhấc cao hơn, tay vung rộng hơn. Game chuyển sang khi tốc độ gốc ≥ 250 px/s (`ĐỀ XUẤT`) | B1 | 6 | 15 | ✔ | 64 |
 | `jump_start` | Lấy đà rời đất | B1 | 2 | 15 | ✘ | 64 |
 | `jump_rise` | Đang bay lên | B1 | 2 | 10 | ✔ | 64 |
 | `jump_apex` | Đỉnh cú nhảy | B1 | 1 | — | ✘ | 64 |
