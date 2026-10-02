@@ -21,7 +21,7 @@ Mức ưu tiên:
 |---|---|---|---|---|---|---|
 | `idle` | Đứng thở, nhún nhẹ | B1 | 4 | 6 | ✔ | 64 |
 | `run` | Chạy | B1 | 6 | 12* | ✔ | 64 |
-| `run_fast` | Chạy nhanh: người đổ sâu hơn (đầu +3, ngực +2, hông +1 px), sải dài hơn, gối nhấc cao hơn, tay vung rộng hơn. Game chuyển sang khi tốc độ gốc ≥ 250 px/s (`ĐỀ XUẤT`) | B1 | 6 | 15 | ✔ | 64 |
+| `run_fast` | Chạy nhanh: thân ngả chéo rõ (đầu lệch trước hông 5 px, độ lệch tăng dần từ hông lên đầu), sải dài hơn, gối nhấc cao hơn, tay vung rộng hơn. Game chuyển sang khi tốc độ gốc ≥ 250 px/s (`ĐỀ XUẤT`) | B1 | 6 | 15 | ✔ | 64 |
 | `jump_start` | Lấy đà rời đất | B1 | 2 | 15 | ✘ | 64 |
 | `jump_rise` | Đang bay lên | B1 | 2 | 10 | ✔ | 64 |
 | `jump_apex` | Đỉnh cú nhảy | B1 | 1 | — | ✘ | 64 |
@@ -121,7 +121,7 @@ Nguyên tắc chung:
 | `land` | Ngồi thụp như `jump_start` | Gối gập sâu hấp thụ lực | Tay ra trước |
 | `death_hit` / `knockback` | Văng ngửa, nghiêng mạnh | Tay chân **xoè tung** về phía sau | Như chân |
 
-Đo trên Luffy (22–24 px): xoạc chạy ≈ 11–13 px, bàn chân sau đá lên tới hàng ngang gối/hông (cách đất 4–6 px), thân đổ: đầu lệch trước 2 px (chạy) / 3 px (chạy nhanh).
+Đo trên Luffy (22–24 px): xoạc chạy ≈ 11–13 px, bàn chân sau đá lên tới hàng ngang gối/hông (cách đất 4–6 px), thân đổ: đầu lệch trước hông 2 px (chạy) / 5 px (chạy nhanh), độ lệch tăng dần theo từng tầng từ hông lên đầu.
 
 ## 4. Mô tả chi tiết và prompt tư thế
 

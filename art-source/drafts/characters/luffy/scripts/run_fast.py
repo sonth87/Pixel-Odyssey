@@ -22,28 +22,27 @@ FAR = {'thigh': C('#224C6E'), 'thigh_edge': C('#224C6E'), 'cuff': C('#B7B9C8'),
 
 # Leg poses as joint offsets from the hip: (knee, ankle, foot direction).
 LEGS = {
-    'contact':  ((3, 3), (5, 6), 1),     # front foot reaches the ground, knee almost straight
-    'support':  ((1, 3), (0, 6), 1),     # weight on it, knee bent forward over the foot
-    'trail':    ((-3, 3), (-6, 4), -1),  # pushed off, leg stretched behind
-    'trail_up': ((-2, 3), (-5, 0), -1),  # heel rising behind after push-off
-    'fold':     ((4, 2), (-2, 1), -1),   # knee forward, shin folded back, heel under the seat
-    'drive':    ((5, 0), (4, 4), 1),     # knee high in front, shin hanging
+    'reach':    ((4, 2), (6, 6), 1),     # front leg forward, knee bent, heel down ahead
+    'trail_hi': ((-3, 3), (-7, 0), -1),  # rear leg stretched back, foot kicked high
+    'support':  ((1, 3), (0, 6), 1),
+    'fold':     ((4, 2), (-2, 1), -1),
+    'spread':   ((4, 1), (6, 4), 1),     # front leg in flight, knee bent
 }
 ARMS = {
-    'fwd':  ["..A...", "..AA..", "...AA.", "....A."],
-    'back': ["..A..", ".AA..", "AA...", "A...."],
+    'fwd':  ["..A..", "..A.A", "..AAA"],   # elbow bent 90 degrees, fist up in front of the chest
+    'back': ["..A..", ".AA..", "A...."],   # elbow pulled back behind the body
     'mid':  ["..A..", "..A..", "..AA."],
 }
 # (bob, near leg, far leg, near arm, far arm)
 FRAMES = [
-    (0, 'contact', 'trail_up', 'back', 'fwd'),
+    (0, 'reach', 'trail_hi', 'back', 'fwd'),
     (1, 'support', 'fold', 'mid', 'mid'),
-    (-2, 'trail', 'drive', 'fwd', 'back'),
-    (0, 'trail_up', 'contact', 'fwd', 'back'),
+    (-2, 'trail_hi', 'spread', 'fwd', 'back'),
+    (0, 'trail_hi', 'reach', 'fwd', 'back'),
     (1, 'fold', 'support', 'mid', 'mid'),
-    (-2, 'drive', 'trail', 'back', 'fwd'),
+    (-2, 'spread', 'trail_hi', 'back', 'fwd'),
 ]
-LEAN = [(0, 10, 3), (10, 13, 2), (13, 16, 1)]   # (row from, row to, x shift): head +2, chest +1, hips 0
+LEAN = [(0, 4, 6), (4, 8, 5), (8, 11, 4), (11, 13, 3), (13, 15, 2), (15, 16, 1)]   # (row from, row to, x shift): head +2, chest +1, hips 0
 NEAR_SHOULDER, FAR_SHOULDER = (11, 3), (11, 10)
 ARM_PIXELS = [(r, c) for r in range(11, 16) for c in range(0, 4)] + [(r, c) for r in range(12, 16) for c in range(10, 13)]
 
@@ -87,7 +86,7 @@ def torso_and_head(bob):
 
 def arm(frame, pose, shoulder, bob, pal):
     r0, c0 = shoulder
-    lean = 2
+    lean = 3
     for r, line in enumerate(ARMS[pose]):
         for c, ch in enumerate(line):
             if ch != '.':
@@ -114,9 +113,9 @@ for i, f in enumerate(frames):
     ys = np.nonzero(f[:, :, 3])[0]
     assert ys.max() <= GROUND, f'frame {i + 1} goes below the ground row'
 strip = np.concatenate(frames, axis=1)
-Image.fromarray(strip, 'RGBA').save(OUT + 'run_fast.png')
+Image.fromarray(strip, 'RGBA').save(OUT + 'run_fast3.png')
 zoom = np.concatenate([f[36:64, 18:48] for f in frames], axis=1)
 bg = Image.new('RGBA', (zoom.shape[1], zoom.shape[0]), (252, 245, 234, 255))
 bg.alpha_composite(Image.fromarray(zoom, 'RGBA'))
-bg.resize((zoom.shape[1] * 12, zoom.shape[0] * 12), Image.NEAREST).save(OUT + 'run_fast_zoom.png')
+bg.resize((zoom.shape[1] * 12, zoom.shape[0] * 12), Image.NEAREST).save(OUT + 'run_fast3_zoom.png')
 print('grounded rows:', [int(np.nonzero(f[:, :, 3])[0].max()) for f in frames])
