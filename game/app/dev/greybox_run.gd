@@ -12,6 +12,9 @@ const GROUND_EDGE := Color(0.78, 0.74, 0.69)
 const PLAYER := Color(0.33, 0.33, 0.36)
 const PLAYER_DEAD := Color(0.62, 0.22, 0.2)
 const HAZARD := Color(0.55, 0.38, 0.3)
+const SPIKES := Color(0.75, 0.2, 0.18)
+const CRATE := Color(0.72, 0.6, 0.45)
+const CRATE_EDGE := Color(0.45, 0.35, 0.24)
 const ENEMY := Color(0.45, 0.3, 0.55)
 const TELEGRAPH := Color(0.85, 0.55, 0.2)
 const DEFEATED := Color(0.75, 0.72, 0.7)
@@ -74,7 +77,7 @@ func _draw() -> void:
 	draw_rect(Rect2(0, 0, width, 180), SKY)
 	_draw_terrain(camera, width)
 	for obstacle in _run.obstacles:
-		_draw_box(obstacle.hitbox(), camera, _obstacle_color(obstacle))
+		_draw_obstacle(obstacle, camera)
 	_draw_box(_run.body.hurtbox(), camera, PLAYER_DEAD if _run.body.is_dead() else PLAYER)
 
 
@@ -94,6 +97,22 @@ func _draw_box(box: Rect2i, camera: int, color: Color) -> void:
 	var x := Fixed.to_px(box.position.x) - camera
 	var y := Fixed.to_px(box.position.y)
 	draw_rect(Rect2(x, y, Fixed.to_px(box.size.x), Fixed.to_px(box.size.y)), color)
+
+
+## Solid-top obstacles look like crates; deadly ones get spikes on top so the difference reads at a glance.
+func _draw_obstacle(obstacle: ObstacleState, camera: int) -> void:
+	var box := obstacle.hitbox()
+	if obstacle.data.solid_top:
+		_draw_box(box, camera, CRATE_EDGE)
+		_draw_box(box.grow(-Fixed.SUB), camera, CRATE)
+		return
+	_draw_box(box, camera, _obstacle_color(obstacle))
+	if obstacle.defeated or obstacle.data.category.begins_with("enemy"):
+		return
+	var left := Fixed.to_px(box.position.x) - camera
+	var top := Fixed.to_px(box.position.y)
+	for x in range(left, left + Fixed.to_px(box.size.x) - 1, 3):
+		draw_colored_polygon(PackedVector2Array([Vector2(x, top), Vector2(x + 3, top), Vector2(x + 1.5, top - 3)]), SPIKES)
 
 
 func _obstacle_color(obstacle: ObstacleState) -> Color:

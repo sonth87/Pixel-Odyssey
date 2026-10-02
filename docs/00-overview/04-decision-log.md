@@ -189,6 +189,13 @@ Mẫu:
 - Vì sao: nhìn file là thấy ngay đường chạy; sửa bằng bất kỳ trình soạn thảo nào; diff rõ trong git; validator và game đọc cùng một dữ liệu. Cách làm phổ biến (Spelunky dùng cách tương tự).
 - Hệ quả: [data schemas — Chunk](../05-technical/04-data-schemas.md), skill `add-island` mục chunk. Ký hiệu cho vật bay, vật rơi, mối nguy, điểm đặt item, hàng xu sẽ thêm khi làm các hành vi đó (M2–M3).
 
+## D-032 — Đáp lên nóc chướng ngại vật: theo hình dáng
+- Ngày: 2026-10-02 · Trạng thái: `CHỐT`
+- Bối cảnh: chơi thử bản khối xám, chủ dự án đáp lên nóc một khối trông như cái thùng và bị chết — luật cũ "mọi vật nguy hiểm ở mọi mặt" trái trực giác.
+- Quyết định: vật trông đứng được (thùng, hòm, xe, sạp, bậc) có `solid_top`: đáp lên nóc an toàn, đâm cạnh thì chết như đâm tường. Vật trông nguy hiểm (xương rồng, gai, lửa, đạn) chạm đâu cũng chết. Kẻ địch đạp được từ trên nếu `stompable`.
+- Phương án khác đã cân nhắc: mọi vật đứng lên được (kiểu Mario — dễ hơn, ít áp lực); giữ nguyên chạm là chết (kiểu khủng long Chrome — đòi art cực rõ).
+- Hệ quả: [interaction rules §6](../01-game-design/09-interaction-rules.md#6-mặt-trên-của-chướng-ngại-vật), schema `ObstacleData.solid_top`, quy tắc art §1 của obstacles spec. Mặt trên vật đứng được được dựng thành địa hình (`ChunkGround`).
+
 ---
 
 ## Câu hỏi `MỞ`

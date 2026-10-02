@@ -11,4 +11,6 @@ extends Resource
 @export var behavior: ObstacleBehaviorData = StaticBehavior.new()
 @export var destructible := true
 @export var stompable := false
+## Looks standable (crate, cart, step): its top is ground and only its sides kill (D-032). Static obstacles only.
+@export var solid_top := false
 @export var sprite_frames: SpriteFrames

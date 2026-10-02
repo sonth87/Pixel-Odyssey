@@ -52,9 +52,8 @@ Ký hiệu: **D** chết · **S** mất 1 khiên + vật bị phá · **S\*** m�
 
 | Loại vật | Thường | Khiên | i-frames | Đạp (đang rơi, từ trên) | Biến hình | Lao tốc |
 |---|---|---|---|---|---|---|
-| `ground_low` (thùng, xương rồng) | D | S | I | D (vật không đạp được) | X | X |
-| `ground_tall` | D | S | I | D | X | X |
-| `ground_wide` | D | S | I | D | X | X |
+| `ground_*` nguy hiểm (xương rồng, gai) | D | S | I | D (vật không đạp được) | X | X |
+| `ground_*` đứng được (thùng, hòm, xe) | Mặt trên: đứng được · Cạnh: `WALL` (như địa hình, mục 6) | | | | X | X |
 | `enemy_*` đạp được | D | S | I | **B** | X | X |
 | `enemy_*` không đạp được (cá sấu, banana wani) | D | S | I | D | X | X |
 | `air` (kền kền: đạp được) | D | S | I | B | X | X |
@@ -85,8 +84,18 @@ Ghi chú:
 
 ## 6. Mặt trên của chướng ngại vật
 
-- Mọi `ground_*` **nguy hiểm ở mọi mặt**, kể cả mặt trên — không đứng lên được. Vì: đọc tình huống đơn giản ("vật = tránh"), và tách rõ với **địa hình** (bậc, mái nhà) là thứ đứng lên được.
-- Muốn có vật đứng lên được (ví dụ thùng hàng làm bậc) → vẽ và đặt nó như **địa hình** (`terrain_step`), có hình dáng khác biệt rõ (bề mặt phẳng, viền sáng trên đỉnh).
+Theo **hình dáng** của vật (D-032), khai báo bằng `ObstacleData.solid_top`:
+
+| Loại | Ví dụ | Mặt trên | Cạnh bên |
+|---|---|---|---|
+| **Vật đứng được** (`solid_top = true`) | Thùng, hòm, chum, xe kéo, sạp, khúc gỗ, bậc đá | **Đáp lên an toàn**, chạy tiếp trên nóc | Đâm vào → `WALL` (như bậc địa hình; corner correction 6 px vẫn áp dụng) |
+| **Vật nguy hiểm** (`solid_top = false`) | Xương rồng, gai, lửa, cột có gai, đạn | Chạm → chết `CONTACT` | Chạm → chết `CONTACT` |
+| **Kẻ địch** | Lính, kền kền | Đạp được nếu `stompable` | Chạm → chết `CONTACT` |
+
+- Về kỹ thuật, mặt trên của vật đứng được **trở thành địa hình** khi chunk được dựng (`ChunkGround`), nên mọi luật địa hình ở mục 7 tự áp dụng và validator tính đúng.
+- Vật đứng được chỉ dùng hành vi đứng yên (validator kiểm tra).
+- Vì sao: người chơi đoán luật theo hình — cái thùng trông đứng được thì phải đứng được; cái gai trông đau thì phải đau. Art phải làm hai nhóm này khác hẳn nhau về hình dáng.
+- Khi có năng lực phá vật (M2): phá một vật đứng được phải gỡ phần địa hình tương ứng — thiết kế cùng hệ hiệu ứng.
 
 ## 7. Địa hình
 

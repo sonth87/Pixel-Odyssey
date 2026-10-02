@@ -11,7 +11,7 @@ static func resolve(body: RunnerBody, obstacles: Array[ObstacleState], previous_
 	if body.is_dead():
 		return stomped
 	for obstacle in obstacles:
-		if obstacle.defeated or not body.hurtbox().intersects(obstacle.hitbox()):
+		if obstacle.defeated or obstacle.data.solid_top or not body.hurtbox().intersects(obstacle.hitbox()):
 			continue
 		if is_stomp(body, obstacle, previous_feet_y):
 			obstacle.defeated = true

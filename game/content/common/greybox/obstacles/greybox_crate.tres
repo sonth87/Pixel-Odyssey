@@ -7,3 +7,4 @@ script = ExtResource("1")
 id = &"greybox_crate"
 category = &"ground_low"
 hitbox = Rect2i(-6, -12, 12, 12)
+solid_top = true

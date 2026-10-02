@@ -122,6 +122,7 @@ Dùng cho pool trái ác quỷ, pool chunk, bộ chướng ngại vật.
 | `behavior` | ObstacleBehaviorData | Hành vi; mặc định `StaticBehavior` |
 | `destructible` | bool | Bị phá bởi năng lực phá (không thì đi xuyên) |
 | `stompable` | bool | Đạp được |
+| `solid_top` | bool | Vật trông đứng được (thùng, xe, bậc): mặt trên là địa hình, chỉ cạnh bên gây chết (D-032). Chỉ dùng với hành vi đứng yên |
 | `destroy_vfx` | PackedScene | |
 | `sfx` | Dictionary[StringName, AudioStream] | `telegraph`, `active`, `defeated`, `stomped` |
 

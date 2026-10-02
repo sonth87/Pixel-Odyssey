@@ -15,9 +15,12 @@ var _hitboxes: Array[Array] = []
 func _init(layout: ChunkLayout, picks: Dictionary, physics: JumpPhysics, speed: int) -> void:
 	_physics = physics
 	_speed = speed
+	var slot_data: Array[ObstacleData] = []
+	for category in layout.slot_categories:
+		slot_data.append(picks[category])
 	_terrain.append_span(-ChunkValidator.RUNWAY_PX, layout.entry_y())
-	for column in layout.column_ground.size():
-		_terrain.append_span(column * ChunkLayout.COLUMN_PX, layout.column_ground[column])
+	for span in ChunkGround.spans(layout, slot_data):
+		_terrain.append_span(span.x, span.y)
 	_terrain.append_span(layout.width_px, layout.exit_y())
 	_start = RunnerBody.new(physics, _terrain)
 	_start.x = Fixed.from_px(-(ChunkValidator.RUNWAY_PX >> 1))
@@ -77,8 +80,9 @@ func _touches_obstacle(body: RunnerBody, tick: int) -> bool:
 func _build_timeline(layout: ChunkLayout, picks: Dictionary) -> void:
 	var states: Array[ObstacleState] = []
 	for i in layout.slots.size():
-		var slot := layout.slots[i]
-		states.append(ObstacleState.new(picks[layout.slot_categories[i]], slot.x, slot.y))
+		var data: ObstacleData = picks[layout.slot_categories[i]]
+		if not data.solid_top:
+			states.append(ObstacleState.new(data, layout.slots[i].x, layout.slots[i].y))
 	var ticks := Fixed.fdiv(_goal - _start.x, _speed) + ChunkValidator.MAX_AIR_TICKS
 	var player_x := _start.x
 	_hitboxes.append([])

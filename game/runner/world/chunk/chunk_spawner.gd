@@ -41,12 +41,14 @@ func choose(pool: Array[ChunkDefinition], speed_px: int, target_difficulty: int)
 
 func place(chunk: ChunkDefinition, obstacle_set: ObstacleSet, terrain: Terrain, obstacles: Array[ObstacleState]) -> void:
 	var layout := layout_of(chunk)
-	for column in layout.column_ground.size():
-		terrain.append_span(next_x_px + column * ChunkLayout.COLUMN_PX, layout.column_ground[column])
+	var picks: Array[ObstacleData] = []
+	for category in layout.slot_categories:
+		picks.append(obstacle_set.pick(category, _rng))
+	for span in ChunkGround.spans(layout, picks):
+		terrain.append_span(next_x_px + span.x, span.y)
 	for i in layout.slots.size():
 		var slot := layout.slots[i]
-		var data := obstacle_set.pick(layout.slot_categories[i], _rng)
-		obstacles.append(ObstacleState.new(data, next_x_px + slot.x, slot.y))
+		obstacles.append(ObstacleState.new(picks[i], next_x_px + slot.x, slot.y))
 	placed_starts.append(next_x_px)
 	placed_ids.append(chunk.id)
 	next_x_px += layout.width_px

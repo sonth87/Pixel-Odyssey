@@ -51,6 +51,8 @@ static func _check_obstacles(chunk: ChunkDefinition, layout: ChunkLayout, obstac
 		if variants.is_empty():
 			errors.append("obstacle set has nothing for %s" % category)
 		for data in variants:
+			if data.solid_top and not data.behavior is StaticBehavior:
+				errors.append("%s: solid_top requires a static behavior" % data.id)
 			if chunk.speed_max + data.behavior.approach_speed() > MAX_APPROACH_SPEED:
 				errors.append("%s approaches faster than %d px/s at speed_max" % [data.id, int(MAX_APPROACH_SPEED)])
 

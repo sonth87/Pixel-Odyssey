@@ -9,7 +9,8 @@ Ghép prompt: `S-PROP + Content + O-PROP + AVOID` (vật tĩnh), `S-CHAR + Chara
 1. Mỗi **loại** chướng ngại vật có một **dáng** dễ nhận: vật thấp — bè ngang; vật cao — đứng thẳng; vật trên không — có cánh/bay, có bóng đổ dưới đất; vật rơi — có bóng đổ to dần trước khi rơi.
 2. Vật nguy hiểm có tương phản cao hơn nền; có ít nhất một mảng màu "nóng" hoặc đậm.
 3. Vật có animation thì frame đầu tiên phải đọc được ngay loại của nó.
-4. Mỗi vật có **phiên bản bị phá** (khi người chơi có năng lực phá): 3–4 frame vỡ/bay đi, hoặc dùng VFX vỡ chung.
+4. **Vật đứng được** (`solid_top`: thùng, hòm, chum, xe, sạp, khúc gỗ) phải trông **phẳng, chắc, đứng lên được**: nóc phẳng, có viền sáng ở mép trên. **Vật nguy hiểm** (xương rồng, gai, lửa) phải trông **nhọn, đau**: đỉnh nhọn/gai, màu nóng. Không vẽ vật nguy hiểm giống thùng và ngược lại (D-032).
+5. Mỗi vật có **phiên bản bị phá** (khi người chơi có năng lực phá): 3–4 frame vỡ/bay đi, hoặc dùng VFX vỡ chung.
 
 ## 2. Chướng ngại vật Alabasta
 
