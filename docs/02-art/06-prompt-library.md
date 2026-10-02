@@ -19,12 +19,24 @@ Mỗi prompt = ghép các **khối** theo thứ tự:
 ### S-CHAR — nhân vật / sinh vật
 ```
 Pixel art game sprite in the exact style of the attached reference image: a tiny chibi
-character about 24 pixels tall drawn on a 64x64 pixel grid, displayed upscaled 16x so every
-pixel is a crisp, perfectly square, equal-sized block aligned to one strict grid. Big head
-(about 40% of total height), short body and limbs, simple dark 2-pixel eyes. Flat colors with
-2 to 3 shades per material (base, shadow, tiny highlight). No black outline: edges are defined
-only by the darker shade of each color. Muted, slightly warm, soft palette, about 12 colors.
+character drawn on a 64x64 pixel grid, displayed upscaled 16x so every pixel is a crisp,
+perfectly square, equal-sized block aligned to one strict grid. Flat colors with 2 to 3 shades
+per material (base, shadow, tiny highlight). No black outline: edges are defined only by the
+darker shade of each color. Muted, slightly warm, soft palette, about 12 colors.
+Keep it extremely simple and small, exactly like the reference: the character occupies only
+about one third of the image height and is centered in the lower half.
 ```
+
+### P-ANATOMY — tỉ lệ cơ thể chuẩn (đo từ `luffy_normal.png`)
+Luôn ghép sau khối nhân vật. Model thường vẽ nhân vật **cao hơn, chi tiết hơn** tham chiếu (lần gen đầu: cao 30 px thay vì 22, thêm miệng, má hồng, sẹo, ngực, gấu quần) — khối này buộc đúng tỉ lệ.
+```
+Exact proportions, counted in grid pixels: total height 22 pixels. Hat or top of hair: 5 rows
+(brim 13 pixels wide). Head: 5 rows, the face is only 6 pixels wide; eyes are two small dark
+1-pixel-wide vertical marks; NO mouth, NO nose, NO cheeks, NO blush, NO scar. Torso: 5 rows,
+about 8 pixels wide, arms are 2-pixel-wide straight strips hanging at the sides. Shorts or
+legs of clothing: 4 rows. Bare legs and feet: 3 rows. Very short legs, big head.
+```
+Nhân vật thấp (Chopper ~16 px) hoặc cao (Franky, Robin) thì chỉnh số hàng theo ảnh tham chiếu của chính nhân vật đó.
 
 ### S-PROP — chướng ngại vật, item, đồ vật
 ```
@@ -64,7 +76,7 @@ Mỗi khối mô tả **ngoại hình cố định** để mọi prompt của nh
 ### C-LUFFY
 ```
 Character: a cheerful young pirate boy. Straw hat with a red band (straw colors #E2C397,
-#AC906A, band #90191C), short messy black hair (#222124), small scar under the left eye,
+#AC906A, band #90191C), short messy black hair (#222124),
 open red short-sleeve vest with two yellow buttons (#90191C, shadow #771516), bare chest,
 blue denim knee-length shorts with rolled cuffs (#5571A3, #3F5C8B), bare legs, simple
 sandals, light skin (#EADAC0, shadow #D0BF9C).
@@ -181,7 +193,9 @@ pixels of different sizes.
 
 ## 7. Mẹo theo model
 
-- **Gemini (Nano Banana / Gemini image)**: rất mạnh ở **chỉnh sửa ảnh có sẵn** (O-EDIT) — cách tốt nhất để ra frame mới mà nhân vật vẫn y hệt. Quy trình nên là: gen 1 frame `idle` thật chuẩn → mọi tư thế khác đều làm bằng O-EDIT từ frame đó.
+- **Đã có sprite tham chiếu đúng chuẩn thì không gen frame đầu**: dùng thẳng ảnh tham chiếu (qua `pixelize.py`) làm frame chuẩn. Luffy `idle` được làm như vậy (2026-10-02) vì ảnh gen mới lệch tỉ lệ và thừa chi tiết so với `luffy_normal.png`.
+- **Gemini (Nano Banana / Gemini image)**: rất mạnh ở **chỉnh sửa ảnh có sẵn** (O-EDIT) — cách tốt nhất để ra frame mới mà nhân vật vẫn y hệt. Mọi tư thế khác đều làm bằng O-EDIT từ frame chuẩn, đính kèm chính frame chuẩn (phóng to 16×, ví dụ `assets/charactors/luffy_normal.png`).
+- Model hay **tự thêm chi tiết** (miệng, má, sẹo, nếp áo) và **vẽ to hơn** → luôn ghép P-ANATOMY và nhắc "NO mouth, NO blush".
 - **ChatGPT (GPT image)**: tốt ở dải nhiều frame (O-STRIP) và hiểu bố cục; hay tự thêm viền/nền → nhắc lại AVOID.
 - Cả hai hay vẽ **pixel giả** (ô không đều, viền mờ) → luôn chạy qua `tools/pixelize.py`.
 - Gen 3–4 biến thể, chọn cái tốt nhất, đừng cố sửa prompt cho tới khi hoàn hảo — phần còn lại sửa tay trong Pixelorama nhanh hơn.

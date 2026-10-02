@@ -49,8 +49,8 @@ M0 ──► [Tài liệu input/hiển thị/tất định] ──► M1 ──�
 | [x] M0-07 | `tools/extract_palette.py` → `art-source/palettes/master.gpl` + bảng con cho 8 nhân vật | Claude | M0-06 | File .gpl mở được trong Aseprite |
 | [x] M0-08 | `tools/pixelize.py` theo [pipeline §5](../02-art/05-ai-image-pipeline.md) + chạy thử trên **toàn bộ** ảnh tham khảo | Claude | M0-07 | Ảnh tham khảo → 64×64 đúng lưới, báo cáo lưới dò được |
 | [ ] M0-09 | Cài Pixelorama (miễn phí) | Bạn | — | Mở được, nhập được bảng màu `.gpl` |
-| [ ] M0-10 | Gen ảnh Luffy `idle` bằng Gemini theo prompt soạn sẵn; lưu raw + `.prompt.md` | Cả hai | — | Có ảnh raw được chọn |
-| [ ] M0-11 | Chạy `pixelize.py` trên ảnh vừa gen; sửa tay trong Pixelorama; tạo `art-source/pixelorama/characters/luffy.pxo` với tag `idle` | Cả hai | M0-08, M0-09, M0-10 | Qua checklist sprite (mục 9.2) |
+| [x] M0-10 | Gen ảnh Luffy `idle` bằng Gemini theo prompt soạn sẵn; lưu raw + `.prompt.md` | Cả hai | — | Có ảnh raw được chọn |
+| [~] M0-11 | Chạy `pixelize.py` trên ảnh vừa gen; sửa tay trong Pixelorama; tạo `art-source/pixelorama/characters/luffy.pxo` với tag `idle` | Cả hai | M0-08, M0-09, M0-10 | Qua checklist sprite (mục 9.2) |
 | [~] M0-12 | Định dạng dải PNG mỗi animation (D-029) + `tools/check_sprites.py`; xuất `idle.png` vào `game/content/onepiece/characters/luffy/sprites/base/` | Cả hai | M0-11 | `check_sprites.py` pass |
 | [ ] M0-13 | Scene thử hiển thị Luffy `idle` đúng pivot, pixel-perfect | Claude | M0-04, M0-12 | Chụp màn hình 4×: pixel vuông, chân đúng mặt đất |
 | [~] M0-14 | Viết tài liệu **input / hiển thị / tất định** (`05-technical/08-input-rendering-determinism.md`): đơn vị số nguyên, nhận chạm theo tick, nội suy hình, cuộn pixel, tỉ lệ màn hình | Claude | — | Bạn duyệt; các thông số physics quy đổi sang nguyên |

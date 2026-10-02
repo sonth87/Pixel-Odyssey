@@ -51,7 +51,7 @@ Có cần cả Pixelorama **và** Godot không? **Có** — vai trò khác nhau:
    Ví dụ `art-source/raw/characters/luffy/idle/20261005_1.png`.
 
 **Chiến lược để các frame nhất quán** (vấn đề khó nhất khi dùng AI):
-- Gen một frame `idle` thật chuẩn trước, xử lý xong, duyệt.
+- Frame chuẩn: nếu nhân vật **đã có sprite tham chiếu đúng chuẩn** (như `assets/charactors/<id>_normal.png`) → dùng thẳng nó làm `idle` frame 1 (pixelize + xoá vạch mặt đất), không gen lại. Chỉ gen frame chuẩn cho nhân vật chưa có tham chiếu, và phải ghép khối P-ANATOMY.
 - Mọi tư thế khác làm bằng **O-EDIT** từ frame đã duyệt (phóng to 16× nearest trước khi gửi).
 - Với chu kỳ chạy: dùng AI cho 2–3 **tư thế chính** (key pose), các frame xen giữa vẽ tay trong Pixelorama bằng onion skin. Nhân vật cao 24 px nên vẽ tay một frame chỉ mất vài phút.
 - Chấp nhận thực tế: AI làm ~60–70% công việc, phần còn lại là sửa tay.

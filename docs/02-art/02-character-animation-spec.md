@@ -278,6 +278,8 @@ returning to a ready stance.
 
 ## 4. Prompt hoàn chỉnh — ví dụ để copy (Luffy `idle`)
 
+> Luffy đã có sprite tham chiếu đúng chuẩn nên `idle` dùng thẳng `luffy_normal.png` (xem [prompt library §7](06-prompt-library.md#7-mẹo-theo-model)). Prompt dưới đây là mẫu cho **nhân vật chưa có tham chiếu**; khi dùng, ghép thêm khối P-ANATOMY sau phần "Character".
+
 Đính kèm: `l_z_n_s_u_c.png` (phong cách) + `luffy_normal.png` (nhận diện).
 
 ```
@@ -289,7 +291,7 @@ pixel is a crisp, perfectly square, equal-sized block aligned to one strict grid
 only by the darker shade of each color. Muted, slightly warm, soft palette, about 12 colors.
 
 Character: a cheerful young pirate boy. Straw hat with a red band (straw colors #E2C397,
-#AC906A, band #90191C), short messy black hair (#222124), small scar under the left eye,
+#AC906A, band #90191C), short messy black hair (#222124),
 open red short-sleeve vest with two yellow buttons (#90191C, shadow #771516), bare chest,
 blue denim knee-length shorts with rolled cuffs (#5571A3, #3F5C8B), bare legs, simple
 sandals, light skin (#EADAC0, shadow #D0BF9C).
