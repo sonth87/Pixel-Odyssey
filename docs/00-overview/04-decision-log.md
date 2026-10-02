@@ -196,6 +196,19 @@ Mẫu:
 - Phương án khác đã cân nhắc: mọi vật đứng lên được (kiểu Mario — dễ hơn, ít áp lực); giữ nguyên chạm là chết (kiểu khủng long Chrome — đòi art cực rõ).
 - Hệ quả: [interaction rules §6](../01-game-design/09-interaction-rules.md#6-mặt-trên-của-chướng-ngại-vật), schema `ObstacleData.solid_top`, quy tắc art §1 của obstacles spec. Mặt trên vật đứng được được dựng thành địa hình (`ChunkGround`).
 
+## D-033 — Chunk tag `intro` chỉ được chọn làm chunk đầu tiên của run
+- Ngày: 2026-10-03 · Trạng thái: `CHỐT`
+- Quyết định: `ChunkSpawner` ưu tiên chunk có thẻ `intro` **chỉ** cho lượt chọn đầu tiên của mỗi run; từ lượt thứ hai, chunk có thẻ `intro` bị loại khỏi danh sách ứng viên.
+- Vì sao: nếu không, chunk "intro" (thường rất thưa, dành riêng cho vài giây mở đầu) có thể bị chọn lại bất cứ lúc nào độ khó còn thấp, gây ra đoạn thưa lặp lại giữa run — phát hiện khi chơi thử M1.
+- Hệ quả: [run & stages §5.1](../01-game-design/02-run-journey-and-stages.md#51-chọn-chunk-khi-chạy).
+
+## D-034 — Chunk greybox: mỗi chunk phải có nội dung gần cả hai đầu; bỏ `flat_intro`
+- Ngày: 2026-10-03 · Trạng thái: `CHỐT`
+- Bối cảnh: chơi thử M1 báo "có đoạn 2-3s không có vật cản" hai lần liên tiếp. Đo bằng script cho thấy nguyên nhân là **cấu trúc**, không phải may rủi: nhiều chunk đặt chướng ngại vật duy nhất ở giữa (cột 20/40), nên phần đuôi của chunk này cộng phần đầu của chunk kế tiếp luôn ra khoảng ~320 px (2 s ở tốc độ mở đầu) trống hoàn toàn bất kể chunk nào ghép với chunk nào. `flat_intro` (hoàn toàn trống) cộng với 320 px đường chạy khởi động (runway) trước đó nhân đôi hiệu ứng này ở đầu mọi run.
+- Quyết định: mọi chunk "thường" phải có ít nhất một chướng ngại/hố gần mỗi đầu (trong khoảng ~80–100 px từ mép), không chỉ ở giữa. Xoá `flat_intro` (trùng vai trò với 320 px runway có sẵn ở đầu run — xem D-033); `breather_flat` giữ lại nhưng có đúng 1 chướng ngại vật đặt gần đầu (không còn hoàn toàn trống) và trọng số thấp hơn (4 so với 10 mặc định).
+- Vì sao không chỉ hạ trọng số các chunk thưa: hai chunk khác nhau vẫn ghép được cạnh nhau dù trọng số thấp; chỉ sửa **vị trí nội dung trong từng chunk** mới chặn được tận gốc.
+- Hệ quả: 7 chunk greybox được sửa lại cách đặt chướng ngại vật (`crate_one`, `pillar_one`, `guard_one`, `log_one`, `gap_24`, `gap_40`, `step_up_down`, `charger_one`). Thêm quy tắc vào [difficulty & pacing](../01-game-design/06-difficulty-and-pacing.md#5-cảm-giác-suýt-chết-nhưng-công-bằng--checklist-cho-người-thiết-kế-chunk) và test chống hồi quy `test_chunk_pacing.gd` (đo khoảng trống lớn nhất trên 150 seed, ngưỡng 450 px). Đo lại sau khi sửa: khoảng trống lớn nhất trên 299 seed là 406 px, chỉ xảy ra một lần ở đầu run (đúng như chủ đích "0–3s đường trống" trong tài liệu nhịp chơi).
+
 ---
 
 ## Câu hỏi `MỞ`

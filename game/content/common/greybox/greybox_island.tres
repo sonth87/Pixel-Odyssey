@@ -4,7 +4,6 @@
 [ext_resource type="Script" path="res://runner/schema/segment_data.gd" id="2"]
 [ext_resource type="Script" path="res://runner/schema/island_data.gd" id="3"]
 [ext_resource type="Resource" path="res://content/common/greybox/greybox_obstacles.tres" id="set"]
-[ext_resource type="Resource" path="res://content/common/greybox/chunks/flat_intro.tres" id="c0"]
 [ext_resource type="Resource" path="res://content/common/greybox/chunks/crate_one.tres" id="c1"]
 [ext_resource type="Resource" path="res://content/common/greybox/chunks/gap_24.tres" id="c2"]
 [ext_resource type="Resource" path="res://content/common/greybox/chunks/crate_pair.tres" id="c3"]
@@ -24,7 +23,7 @@
 [sub_resource type="Resource" id="segment"]
 script = ExtResource("2")
 id = &"greybox_all"
-chunk_pool = Array[ExtResource("1")]([ExtResource("c0"), ExtResource("c1"), ExtResource("c2"), ExtResource("c3"), ExtResource("c4"), ExtResource("c5"), ExtResource("c6"), ExtResource("c7"), ExtResource("c8"), ExtResource("c9"), ExtResource("c10"), ExtResource("c11"), ExtResource("c12"), ExtResource("c13"), ExtResource("c14"), ExtResource("c15")])
+chunk_pool = Array[ExtResource("1")]([ExtResource("c1"), ExtResource("c2"), ExtResource("c3"), ExtResource("c4"), ExtResource("c5"), ExtResource("c6"), ExtResource("c7"), ExtResource("c8"), ExtResource("c9"), ExtResource("c10"), ExtResource("c11"), ExtResource("c12"), ExtResource("c13"), ExtResource("c14"), ExtResource("c15")])
 obstacle_set = ExtResource("set")
 
 [resource]

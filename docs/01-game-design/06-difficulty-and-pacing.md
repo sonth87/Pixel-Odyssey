@@ -60,6 +60,7 @@ Lần chơi đầu (FR-UI-03): ở 3 s đầu tiên hiện bàn tay "chạm đ�
 - [ ] Không có chỗ mà cách duy nhất là phản xạ dưới 0.25 s.
 - [ ] Item `risky` thật sự rủi ro nhưng lấy được bằng một thao tác hợp lý.
 - [ ] Validator báo xanh ở mọi tốc độ của chunk.
+- [ ] **Trừ chunk `breather`/`intro`**, có ít nhất một chướng ngại/hố trong khoảng ~80–100 px tính từ **mỗi đầu** chunk (không chỉ dồn vào giữa). Vì: đuôi một chunk cộng đầu chunk kế tiếp là khoảng người chơi thật sự trải nghiệm liên tục; dồn nội dung vào giữa khiến khoảng này luôn trống bất kể ghép với chunk nào (D-034). Kiểm tra bằng `tests/unit/runner/test_chunk_pacing.gd` (khoảng trống lớn nhất trên nhiều seed ≤ 450 px).
 
 ## 6. Cách chỉnh (tuning) trong M1/M3
 

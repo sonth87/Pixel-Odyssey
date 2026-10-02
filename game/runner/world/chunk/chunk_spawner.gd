@@ -2,12 +2,15 @@ class_name ChunkSpawner
 extends RefCounted
 ## Picks and places chunks ahead of the runner with controlled randomness
 ## (docs/01-game-design/02-run-journey-and-stages.md §5.1): speed range, matching ground height, difficulty
-## near the target, no repeat of the last three, and a breather after two hard chunks.
+## near the target, no repeat of the last three, a breather after two hard chunks, and `intro`-tagged
+## chunks only as the very first chunk of a run (D-033) — otherwise they can recur throughout a low-
+## difficulty stretch and, chained with other sparse chunks, read as a long dead patch with nothing in it.
 
 const RECENT_LIMIT := 3
 const HARD_DIFFICULTY := 4
 const HARD_STREAK_LIMIT := 2
 const BREATHER := &"breather"
+const INTRO := &"intro"
 
 var next_x_px := 0
 var last_exit_y := ChunkLayout.GROUND_Y_PX
@@ -28,6 +31,14 @@ func _init(rng: RandomNumberGenerator) -> void:
 func choose(pool: Array[ChunkDefinition], speed_px: int, target_difficulty: int) -> ChunkDefinition:
 	var fitting := pool.filter(func(c: ChunkDefinition) -> bool: return _fits(c, speed_px))
 	assert(not fitting.is_empty(), "no chunk fits speed %d and ground height %d" % [speed_px, last_exit_y])
+	if placed_ids.is_empty():
+		var intro := fitting.filter(func(c: ChunkDefinition) -> bool: return INTRO in c.tags)
+		if not intro.is_empty():
+			return _weighted_pick(intro)
+	else:
+		var without_intro := fitting.filter(func(c: ChunkDefinition) -> bool: return INTRO not in c.tags)
+		if not without_intro.is_empty():
+			fitting = without_intro
 	var tiers: Array[Array] = [
 		fitting.filter(func(c: ChunkDefinition) -> bool: return _suits_level(c, target_difficulty) and c.id not in _recent),
 		fitting.filter(func(c: ChunkDefinition) -> bool: return _suits_level(c, target_difficulty)),
