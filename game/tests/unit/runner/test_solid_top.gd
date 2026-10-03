@@ -38,7 +38,7 @@ func _run(world: Array, jump_tick: int, hold: int) -> Array:
 	for t in 240:
 		var feet := body.y
 		body.step(TickInput.of(t == jump_tick, t >= jump_tick and t < jump_tick + hold), SPEED)
-		CollisionResolver.resolve(body, obstacles, feet)
+		CollisionResolver.resolve(body, obstacles, feet, EffectHost.new())
 		landed_high = landed_high or (body.grounded and body.y < Fixed.from_px(148))
 		if body.is_dead():
 			break

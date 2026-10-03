@@ -17,6 +17,7 @@ var obstacles: Array[ObstacleState] = []
 var spawner: ChunkSpawner
 var recording := InputRecording.new()
 var stomps := 0
+var effects: EffectHost
 
 var _island: IslandData
 var _speed_start: int
@@ -25,8 +26,9 @@ var _length: int
 var _start_x: int
 
 
-func _init(physics: JumpPhysics, island: IslandData, rng: RngStreams) -> void:
+func _init(physics: JumpPhysics, island: IslandData, rng: RngStreams, passive_effects: Array[EffectData] = []) -> void:
 	_island = island
+	effects = EffectHost.new(passive_effects)
 	_speed_start = Fixed.velocity(island.speed_start)
 	_speed_end = Fixed.velocity(island.speed_end)
 	_length = Fixed.from_px(island.length_m * PX_PER_METER)
@@ -49,7 +51,8 @@ func step(input: TickInput) -> void:
 	body.step(input, speed_at(body.x))
 	for obstacle in obstacles:
 		obstacle.step(body.x)
-	stomps += CollisionResolver.resolve(body, obstacles, feet).size()
+	stomps += CollisionResolver.resolve(body, obstacles, feet, effects).size()
+	effects.step()
 	tick += 1
 	_fill_ahead()
 	_drop_passed()
