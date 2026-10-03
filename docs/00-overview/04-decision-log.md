@@ -214,6 +214,12 @@ Mẫu:
 - Quyết định: `greybox_island.tres` khai báo rõ `length_m = 2500` (trước đó dùng ngầm giá trị mặc định 1500 m của `IslandData`). Tốc độ đầu/cuối (140 → 260 px/s) giữ nguyên, chỉ kéo dài quãng đường để đạt tốc độ tối đa.
 - Vì sao chỉ đổi `length_m` mà không đổi `speed_end`: phản hồi là về **nhịp tăng**, không phải về tốc độ tối đa có gắt hay không; đổi độ dài giữ nguyên "đích" nhưng kéo dài đường tới đó.
 
+## D-036 — Chuyển sang M2 trước khi hoàn tất M1-15..18
+- Ngày: 2026-10-03 · Trạng thái: `CHỐT`
+- Bối cảnh: M1 còn 4 việc chưa làm (M1-15 âm thanh tạm, M1-16 xuất bản, M1-17 playtest 3–5 người, M1-18 chỉnh theo playtest). Chủ dự án đã tự chơi thử nhiều lượt trực tiếp trên máy trong suốt M1 và chỉnh nhiều thông số theo phản hồi thật (D-030 đến D-035), và chủ động quyết định sang M2.
+- Quyết định: coi cảm giác chơi (mục tiêu chính của M1) là đã đủ để quyết định, chuyển sang M2. Bốn việc còn lại của M1 **không bị xoá**, để nguyên trong checklist, làm khi quay lại (có thể cùng lúc với M4 khi đã có âm thanh/art thật, lúc đó xuất bản + playtest nhiều người sẽ có ý nghĩa hơn).
+- Vì sao không chặn: playtest 1 người kỹ (chủ dự án) qua nhiều lượt với phản hồi được xử lý ngay đã thay thế được phần lớn giá trị của playtest 3–5 người ở giai đoạn này; âm thanh/xuất bản chưa cấp thiết khi chưa có art thật để đưa người ngoài chơi.
+
 ---
 
 ## Câu hỏi `MỞ`

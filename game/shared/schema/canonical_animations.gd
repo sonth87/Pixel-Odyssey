@@ -1,5 +1,21 @@
 class_name CanonicalAnimations
-## Default playback (fps, loop) for the standard animation tags of docs/02-art/02-character-animation-spec.md.
+## Default playback (fps, loop) and required-tag groups for the standard animation tags of
+## docs/02-art/02-character-animation-spec.md §2.
+
+## Base form, every runner character (§2.1–2.3). `eat`/`transform_enter`/`transform_exit` are only
+## required for a character whose data actually has a transform (checked separately, not listed here).
+const RUNNER_REQUIRED: Array[StringName] = [
+	&"idle", &"run", &"run_fast", &"jump_start", &"jump_rise", &"jump_apex", &"fall", &"land",
+	&"hurt", &"death_hit", &"death_lie",
+]
+## A transform form's own animation set (§2.4).
+const RUNNER_FORM_REQUIRED: Array[StringName] = [
+	&"form_idle", &"form_run", &"form_jump_rise", &"form_fall", &"form_land", &"form_attack",
+]
+## Game 2 (action) — not checked by game 1, listed so the tag names are fixed now.
+const ACTION_REQUIRED: Array[StringName] = [
+	&"walk", &"attack_1_startup", &"attack_1_active", &"attack_1_recovery",
+]
 
 const DEFAULT_FPS := 10.0
 

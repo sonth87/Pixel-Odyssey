@@ -82,7 +82,7 @@ Có thể làm song song: M0-01/04/05/06/07/08/14 (Claude) cùng lúc với M0-0
 | [x] M1-14 | `check_layers.py`, `check_ip_names.py` | Claude | M0-04 | Chạy được, đang pass |
 | [ ] M1-15 | 3 SFX tạm (nhảy, đáp, chết) bằng jsfxr | Cả hai | — | |
 | [ ] M1-16 | Xuất bản PC/Android để playtest | Claude | M1-11 | Cài được lên máy bạn |
-| [ ] M1-17 | Playtest 3–5 người × 5 phút; ghi nhận xét + log chết | Bạn | M1-16 | Có bảng ghi chép |
+| [ ] M1-17 | Playtest 3–5 người × 5 phút; ghi nhận xét + log chết | Bạn | M1-16 | Có bảng ghi chép — hoãn, xem D-036 |
 | [ ] M1-18 | Chỉnh thông số theo playtest; cập nhật physics + decision log; chạy lại validator | Cả hai | M1-17 | Tiêu chí M1 trong milestones đạt |
 
 Song song phía Bạn trong M1: gen + sửa các frame B1 của Luffy (chuẩn bị M2) — xem M2-01.
